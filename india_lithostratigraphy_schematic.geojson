@@ -1,0 +1,467 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "title": "Schematic Lithostratigraphic Map of India - Archean Basement and Precambrian Supergroups",
+    "accuracy_disclaimer": "GEOMETRY IS SCHEMATIC/APPROXIMATE. Polygons are illustrative extents derived from published basin/craton descriptions, NOT digitized from official GSI survey maps. Do not use for precise spatial analysis, land-use, or engineering decisions. Suitable for general public education and conceptual visualization only.",
+    "coordinate_system": "WGS84 (EPSG:4326)",
+    "age_reference": "Numeric age ranges (age_min_ma = older bound, age_max_ma = younger bound, both in millions of years before present) follow standard geologic timescale usage (ICS International Chronostratigraphic Chart) combined with basin-specific literature ages. Ranges for Vindhyan, Bhima, and Chhattisgarh Supergroups remain actively debated among researchers - see age_uncertain flag.",
+    "recommended_use": "Time-slider filtering: show a feature when slider_value is between age_min_ma and age_max_ma. Pair with a real basemap (e.g. OneGeology WMS) for visual context."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Peninsular Gneissic Complex (Dharwar Craton basement)",
+        "unit_type": "basement_complex",
+        "classical_division": "Archaean Group",
+        "age_min_ma": 3000,
+        "age_max_ma": 3000,
+        "age_uncertain": false,
+        "region": "Karnataka, southern Andhra Pradesh",
+        "note": "Age corrected to ~3000 Ma per Ramakrishnan, Table 3D-2. EDC equivalent: 'Enclaves of older gneiss', same age.",
+        "source": "Ramakrishnan, M. - Table 3D-2, Simplified stratigraphy of Archaean Dharwar craton"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[74.0,10.5],[80.0,11.0],[80.5,17.0],[74.0,17.5],[73.5,14.0],[74.0,10.5]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sargur Group",
+        "unit_type": "basement_complex",
+        "rank_note": "Positioned below the Dharwar Supergroup's basal unconformity, i.e. older basement rather than part of the Supergroup - moved out of Dharwar Supergroup per Table 3D-2",
+        "classical_division": "Archaean Group",
+        "age_min_ma": 3300,
+        "age_max_ma": 3100,
+        "age_uncertain": false,
+        "region": "Western Dharwar Craton, Karnataka",
+        "note": "Eastern Dharwar Craton equivalents (tentative): (?) Warangal Group, (?) Salem Group, same age range.",
+        "source": "Ramakrishnan, M. - Table 3D-2, Simplified stratigraphy of Archaean Dharwar craton"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[74.2,11.0],[76.5,11.2],[76.6,13.5],[74.5,13.8],[74.2,11.0]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Gorur Gneiss",
+        "unit_type": "basement_complex",
+        "classical_division": "Archaean Group",
+        "age_min_ma": 3400,
+        "age_max_ma": 3300,
+        "age_uncertain": false,
+        "region": "Western Dharwar Craton, Karnataka",
+        "note": "Oldest dated basement unit in the Dharwar craton per Table 3D-2. EDC equivalent: 'Putative Basement', same age range.",
+        "source": "Ramakrishnan, M. - Table 3D-2, Simplified stratigraphy of Archaean Dharwar craton"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[74.0,11.5],[75.5,11.6],[75.6,12.8],[74.1,12.9],[74.0,11.5]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bastar Gneissic Complex",
+        "unit_type": "basement_complex",
+        "classical_division": "Archaean Group",
+        "age_min_ma": 3600,
+        "age_max_ma": 3000,
+        "age_uncertain": true,
+        "region": "Chhattisgarh, Odisha",
+        "note": "Oldest basement of the Bastar craton, with relict signatures at 3600-3500 Ma; bulk of the gneiss dated at >3000 Ma per Table 3B-1. Range narrowed and flagged uncertain since relict ages are only 'vestiges', not the dominant crystallization age.",
+        "source": "Ramakrishnan, M. - Table 3B-1, Generalised stratigraphy of Bastar craton"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[80.0,18.0],[83.0,18.5],[83.2,21.5],[80.2,21.8],[79.7,20.0],[80.0,18.0]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sukma Group / Amgaon Group",
+        "unit_type": "group",
+        "classical_division": "Archaean Group",
+        "age_min_ma": 3000,
+        "age_max_ma": 3000,
+        "age_uncertain": false,
+        "region": "Bastar craton, Chhattisgarh",
+        "note": "Amgaon Group in the Kotri-Dongargarh Orogen; Sukma Group is the equivalent unit across the rest of the craton",
+        "source": "Ramakrishnan, M. - Table 3B-1, Generalised stratigraphy of Bastar craton"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[80.2,18.3],[81.5,18.4],[81.6,19.5],[80.3,19.6],[80.2,18.3]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bhopalpatnam and Kondagaon granulites, Sukma granites",
+        "unit_type": "formation",
+        "classical_division": "Archaean Group",
+        "age_min_ma": 2600,
+        "age_max_ma": 2600,
+        "age_uncertain": false,
+        "region": "Bastar craton, Chhattisgarh (rest of craton, not present in Kotri-Dongargarh Orogen sector)",
+        "source": "Ramakrishnan, M. - Table 3B-1, Generalised stratigraphy of Bastar craton"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[81.0,19.0],[82.2,19.1],[82.3,20.0],[81.1,20.1],[81.0,19.0]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bengpal Group",
+        "unit_type": "group",
+        "classical_division": "Archaean Group",
+        "age_min_ma": 2600,
+        "age_max_ma": 2500,
+        "age_uncertain": false,
+        "region": "Bastar craton, Chhattisgarh (present in both the Kotri-Dongargarh Orogen and rest of the craton)",
+        "source": "Ramakrishnan, M. - Table 3B-1, Generalised stratigraphy of Bastar craton"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[80.5,19.2],[81.7,19.3],[81.8,20.3],[80.6,20.4],[80.5,19.2]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bailadila Group",
+        "unit_type": "group",
+        "classical_division": "Archaean Group",
+        "age_min_ma": 2400,
+        "age_max_ma": 2400,
+        "age_uncertain": false,
+        "region": "Kotri-Dongargarh Orogen, Bastar craton",
+        "note": "Named for the Bailadila iron-ore range",
+        "source": "Ramakrishnan, M. - Table 3B-1, Generalised stratigraphy of Bastar craton"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[80.3,19.6],[81.2,19.7],[81.3,20.4],[80.4,20.5],[80.3,19.6]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Nandgaon Group / Sonakhan Group",
+        "unit_type": "group",
+        "classical_division": "Archaean Group",
+        "age_min_ma": 2300,
+        "age_max_ma": 2300,
+        "age_uncertain": false,
+        "region": "Bastar craton, Chhattisgarh",
+        "note": "Nandgaon Group in the Kotri-Dongargarh Orogen; Sonakhan Group is the equivalent unit across the rest of the craton",
+        "source": "Ramakrishnan, M. - Table 3B-1, Generalised stratigraphy of Bastar craton"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[80.5,18.5],[81.6,18.6],[81.7,19.3],[80.6,19.4],[80.5,18.5]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dongargarh Granite / Malanjkhand Granite / Kanker Granite",
+        "unit_type": "formation",
+        "classical_division": "Archaean Group",
+        "age_min_ma": 2300,
+        "age_max_ma": 2300,
+        "age_uncertain": false,
+        "region": "Bastar craton, Chhattisgarh",
+        "note": "Dongargarh Granite in the Kotri-Dongargarh Orogen; Malanjkhand and Kanker Granites are equivalent intrusions across the rest of the craton",
+        "source": "Ramakrishnan, M. - Table 3B-1, Generalised stratigraphy of Bastar craton"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[80.8,18.2],[81.9,18.3],[82.0,19.0],[80.9,19.1],[80.8,18.2]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Khairagarh Group",
+        "unit_type": "group",
+        "classical_division": "Purana Group",
+        "age_min_ma": 2200,
+        "age_max_ma": 2200,
+        "age_uncertain": false,
+        "region": "Kotri-Dongargarh Orogen, Bastar craton",
+        "source": "Ramakrishnan, M. - Table 3B-1, Generalised stratigraphy of Bastar craton"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[80.7,20.5],[81.7,20.6],[81.8,21.3],[80.8,21.4],[80.7,20.5]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Chilpi Group / Sakoli Group",
+        "unit_type": "group",
+        "classical_division": "Purana Group",
+        "age_min_ma": 2000,
+        "age_max_ma": 1800,
+        "age_uncertain": false,
+        "region": "Bastar craton, Chhattisgarh",
+        "note": "Chilpi Group in the Kotri-Dongargarh Orogen; Sakoli Group is the equivalent unit across the rest of the craton. Youngest unit in Table 3B-1.",
+        "source": "Ramakrishnan, M. - Table 3B-1, Generalised stratigraphy of Bastar craton"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[80.9,20.8],[82.0,20.9],[82.1,21.6],[81.0,21.7],[80.9,20.8]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bundelkhand Gneissic Complex",
+        "unit_type": "basement_complex",
+        "classical_division": "Archaean Group",
+        "age_min_ma": 2900,
+        "age_max_ma": 2500,
+        "age_uncertain": false,
+        "region": "Madhya Pradesh, Uttar Pradesh"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[78.5,24.5],[81.5,24.8],[81.3,26.0],[78.3,25.8],[78.2,25.0],[78.5,24.5]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Singhbhum Craton (Older Metamorphic Group / Singhbhum Granite)",
+        "unit_type": "basement_complex",
+        "classical_division": "Archaean Group",
+        "age_min_ma": 3500,
+        "age_max_ma": 3100,
+        "age_uncertain": false,
+        "region": "Jharkhand, Odisha"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[85.0,21.5],[87.0,21.8],[86.8,23.2],[84.8,23.0],[84.6,22.0],[85.0,21.5]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Chhotanagpur Granite Gneissic Complex (CGGC)",
+        "unit_type": "basement_complex",
+        "classical_division": "Archaean Group",
+        "age_min_ma": 1600,
+        "age_max_ma": 950,
+        "age_uncertain": true,
+        "region": "Jharkhand, Bihar, West Bengal",
+        "note": "CGGC is polyphase/reworked; age range shown reflects dominant granulite-facies events, not a single simple crystallization age"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[84.0,23.0],[87.5,23.5],[87.0,25.0],[83.5,24.5],[83.3,23.5],[84.0,23.0]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Banded Gneissic Complex (BGC) / Bhilwara Supergroup basement",
+        "unit_type": "basement_complex",
+        "classical_division": "Archaean Group",
+        "age_min_ma": 2500,
+        "age_max_ma": 2000,
+        "age_uncertain": false,
+        "region": "Rajasthan (basement to Aravalli-Delhi belt)"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[72.5,24.0],[76.0,24.5],[75.5,28.0],[72.0,27.0],[71.8,25.0],[72.5,24.0]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dharwar Supergroup",
+        "unit_type": "supergroup",
+        "classical_division": "Archaean Group (Dharwar System)",
+        "age_min_ma": 2800,
+        "age_max_ma": 2600,
+        "age_uncertain": false,
+        "region": "Western & Eastern Dharwar Craton, Karnataka",
+        "groups": ["Bababudan Group", "Chitradurga Group"],
+        "note": "Age and group membership corrected per Ramakrishnan, Table 3D-2: Sargur Group lies below the basal unconformity as older basement, not part of the Supergroup proper. Eastern Dharwar Craton equivalents are the Kolar Group and Yashwantanagar Formation (also 2800-2600 Ma).",
+        "source": "Ramakrishnan, M. - Table 3D-2, Simplified stratigraphy of Archaean Dharwar craton"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[74.5,12.0],[78.0,12.5],[78.3,15.5],[76.0,16.5],[74.7,15.0],[74.5,12.0]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Aravalli Supergroup",
+        "unit_type": "supergroup",
+        "classical_division": "Purana Group",
+        "age_min_ma": 2200,
+        "age_max_ma": 1800,
+        "age_uncertain": false,
+        "region": "Aravalli Range, Rajasthan",
+        "groups": ["Lower Aravalli Group", "Udaipur Group", "Jharol Group"]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[73.0,23.8],[75.0,23.8],[75.3,25.5],[73.5,25.8],[72.7,24.5],[73.0,23.8]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mahakoshal Supergroup",
+        "unit_type": "supergroup",
+        "rank_note": "Conventionally ranked as Mahakoshal Group, not Supergroup",
+        "classical_division": "Purana Group",
+        "age_min_ma": 2000,
+        "age_max_ma": 1800,
+        "age_uncertain": false,
+        "region": "Son Valley / Central Indian Tectonic Zone, MP-UP border",
+        "groups": ["Mahakoshal Group"]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[80.5,23.8],[83.0,24.3],[82.8,24.8],[80.3,24.3],[80.5,23.8]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Cuddapah Supergroup",
+        "unit_type": "supergroup",
+        "classical_division": "Purana Group (Cuddapah System)",
+        "age_min_ma": 1900,
+        "age_max_ma": 1000,
+        "age_uncertain": false,
+        "region": "Cuddapah Basin, Andhra Pradesh",
+        "groups": ["Papaghni Group", "Chitravati Group", "Nallamalai Group"]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[78.0,13.5],[79.5,13.8],[79.8,15.5],[78.3,16.0],[77.8,14.5],[78.0,13.5]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Delhi Supergroup",
+        "unit_type": "supergroup",
+        "classical_division": "Purana Group",
+        "age_min_ma": 1700,
+        "age_max_ma": 1000,
+        "age_uncertain": false,
+        "region": "Aravalli Range, Rajasthan (overlies Aravalli Supergroup)",
+        "groups": ["Alwar Group", "Ajabgarh Group"]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[74.5,25.5],[77.0,27.5],[76.0,28.5],[74.0,26.5],[74.5,25.5]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kaladgi Supergroup",
+        "unit_type": "supergroup",
+        "classical_division": "Purana Group",
+        "age_min_ma": 1800,
+        "age_max_ma": 1300,
+        "age_uncertain": false,
+        "region": "Bijapur-Belgaum-Bagalkot area, Karnataka",
+        "groups": ["Bagalkot Group", "Badami Group"]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[74.8,15.7],[76.3,15.9],[76.2,17.0],[74.9,16.8],[74.8,15.7]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Chhattisgarh Supergroup",
+        "unit_type": "supergroup",
+        "classical_division": "Purana Group",
+        "age_min_ma": 1500,
+        "age_max_ma": 1000,
+        "age_uncertain": true,
+        "region": "Chhattisgarh Basin (Hirri & Baradwar sub-basins), Chhattisgarh/Odisha",
+        "groups": ["Singhora Group", "Chandarpur Group", "Raipur Group", "Kharsiya Group"]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[80.8,20.0],[82.5,20.2],[82.7,22.0],[81.0,22.2],[80.6,21.0],[80.8,20.0]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Vindhyan Supergroup",
+        "unit_type": "supergroup",
+        "classical_division": "Purana Group (Vindhyan System)",
+        "age_min_ma": 1700,
+        "age_max_ma": 650,
+        "age_uncertain": true,
+        "region": "Madhya Pradesh, Uttar Pradesh, Rajasthan",
+        "groups": ["Semri Group", "Kaimur Group", "Rewa Group", "Bhander Group"],
+        "note": "Age of upper Vindhyan remains actively debated (some workers argue for a much older, entirely Proterozoic age with no Cambrian overlap)"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[77.0,23.5],[82.5,24.0],[82.0,25.5],[76.5,25.0],[76.8,24.0],[77.0,23.5]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bhima Supergroup",
+        "unit_type": "supergroup",
+        "rank_note": "Conventionally ranked as Bhima Group - smallest Proterozoic basin in India",
+        "classical_division": "Purana Group",
+        "age_min_ma": 1000,
+        "age_max_ma": 600,
+        "age_uncertain": true,
+        "region": "Kalaburagi/Yadgir (Karnataka) and Mahbubnagar/Rangareddy (Telangana)",
+        "groups": ["Sedam Subgroup", "Andola Subgroup"]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[76.3,16.2],[77.5,16.4],[77.4,17.4],[76.4,17.2],[76.3,16.2]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kurnool Supergroup",
+        "unit_type": "supergroup",
+        "rank_note": "Conventionally ranked as Kurnool Group, unconformably overlying Cuddapah Supergroup",
+        "classical_division": "Purana Group",
+        "age_min_ma": 900,
+        "age_max_ma": 500,
+        "age_uncertain": true,
+        "region": "Kurnool Basin, Andhra Pradesh (northern part of Cuddapah Basin)",
+        "groups": ["Kurnool Group"]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[78.0,15.3],[79.2,15.5],[79.0,16.2],[77.9,16.0],[78.0,15.3]]]
+      }
+    }
+  ]
+}

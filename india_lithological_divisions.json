@@ -1,0 +1,226 @@
+{
+  "title": "Lithological / Chronostratigraphic Divisions of India",
+  "classification_scheme": "Classical Blanford-Medlicott four-fold division, as used in GSI geological map legends",
+  "source_note": "Compiled from GSI's traditional lithological classification and standard Indian geology textbooks (e.g. Ravindra Kumar, Krishnan). This is a coarser, map-legend-style classification layered on top of the detailed Supergroup->Group->Formation->Member hierarchy from the earlier stratigraphy files - each division here groups several of those supergroups/systems together by age and lithological character. Cross-check against the latest GSI Stratigraphic Chart of India for current usage.",
+  "divisions": [
+    {
+      "id": 1,
+      "name": "Archaean Group",
+      "age": "Eoarchean to Neoarchean / earliest Paleoproterozoic (c. 4000-2500 Ma)",
+      "lithology_character": "Highly deformed and metamorphosed crystalline basement - granite, gneiss, migmatite, schist, banded iron formation (BIF), greenstone",
+      "description": "Oldest exposed rocks of India, forming the crystalline basement of the Peninsular Shield on which all younger sequences were unconformably deposited.",
+      "subdivisions": [
+        {
+          "name": "Peninsular Gneissic Complex (PGC)",
+          "lithology": "Tonalite-trondhjemite-granodiorite (TTG) gneiss, migmatite, granite",
+          "region": "Dharwar Craton and other cratonic nuclei",
+          "related_supergroup": "Archean Basement (see gsi_stratigraphic_hierarchy_india_v2.json)"
+        },
+        {
+          "name": "Dharwar System (schist belts / Sargur-Dharwar Supergroup)",
+          "lithology": "BIF, greenstone (metabasalt/metakomatiite), quartzite, conglomerate, phyllite",
+          "region": "Karnataka, Andhra Pradesh",
+          "related_supergroup": "Dharwar Supergroup"
+        },
+        {
+          "name": "Bastar Gneissic Complex",
+          "lithology": "Gneiss, granite, migmatite",
+          "region": "Chhattisgarh, Odisha"
+        },
+        {
+          "name": "Bundelkhand Gneissic Complex",
+          "lithology": "Gneiss, granite; cut by Bundelkhand quartz reef swarm",
+          "region": "Madhya Pradesh, Uttar Pradesh"
+        },
+        {
+          "name": "Singhbhum Craton (Older Metamorphic Group / Singhbhum Granite)",
+          "lithology": "Gneiss, granite, banded iron formation (Iron Ore Group)",
+          "region": "Jharkhand, Odisha"
+        },
+        {
+          "name": "Chhotanagpur Granite Gneissic Complex (CGGC)",
+          "lithology": "Gneiss, granite, migmatite, charnockite",
+          "region": "Jharkhand, Bihar, West Bengal"
+        },
+        {
+          "name": "Banded Gneissic Complex (BGC) / Bhilwara Supergroup",
+          "lithology": "Gneiss, schist, migmatite",
+          "region": "Rajasthan (basement to Aravalli-Delhi belt)"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Purana Group",
+      "age": "Paleoproterozoic to Neoproterozoic (c. 1900-600 Ma)",
+      "lithology_character": "Flat-lying, undeformed and largely unmetamorphosed platform sedimentary sequences - sandstone, shale, limestone/dolomite - deposited in intracratonic basins on the Archaean basement",
+      "description": "'Purana' means 'ancient' in Sanskrit; these are the oldest well-preserved sedimentary basins of Peninsular India, sitting unconformably on Archaean crystalline basement.",
+      "subdivisions": [
+        {
+          "name": "Cuddapah System",
+          "lithology": "Quartzite, shale, limestone, dolomite; minor volcanics",
+          "region": "Andhra Pradesh",
+          "related_supergroup": "Cuddapah Supergroup"
+        },
+        {
+          "name": "Vindhyan System",
+          "lithology": "Sandstone, shale, limestone",
+          "region": "Madhya Pradesh, Uttar Pradesh, Rajasthan",
+          "related_supergroup": "Vindhyan Supergroup"
+        },
+        {
+          "name": "Kaladgi Basin",
+          "lithology": "Quartzite, shale, limestone",
+          "region": "Karnataka",
+          "related_supergroup": "Kaladgi Supergroup"
+        },
+        {
+          "name": "Bhima Basin",
+          "lithology": "Sandstone, shale, limestone",
+          "region": "Karnataka, Telangana",
+          "related_supergroup": "Bhima Supergroup (conventionally ranked as Bhima Group)"
+        },
+        {
+          "name": "Chhattisgarh Basin",
+          "lithology": "Sandstone, shale, limestone, tuff",
+          "region": "Chhattisgarh, Odisha",
+          "related_supergroup": "Chhattisgarh Supergroup"
+        },
+        {
+          "name": "Kurnool Basin",
+          "lithology": "Conglomerate, sandstone, shale, limestone",
+          "region": "Andhra Pradesh",
+          "related_supergroup": "Kurnool Supergroup (conventionally ranked as Kurnool Group)"
+        },
+        {
+          "name": "Pakhal Basin",
+          "lithology": "Quartzite, shale, limestone",
+          "region": "Telangana (Pranhita-Godavari valley)"
+        },
+        {
+          "name": "Penganga Basin",
+          "lithology": "Shale, limestone",
+          "region": "Maharashtra, Telangana"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Dravidian Group",
+      "age": "Cambrian to Jurassic (Paleozoic to early Mesozoic, c. 540-160 Ma)",
+      "lithology_character": "Two contrasting settings - marine shelf carbonates/shales in the Extra-Peninsular Himalayan belt, and fluvio-lacustrine sandstone-shale-coal sequences in Peninsular India (Lower Gondwana)",
+      "description": "Named for its type development in parts of the Peninsula; represents the interval when the Himalayan region was a passive continental shelf under the Tethys Sea while Peninsular India developed rift-basin coal-bearing sequences.",
+      "subdivisions": [
+        {
+          "name": "Extra-Peninsular (Himalayan) Paleozoic sequence",
+          "lithology": "Marine limestone, shale, quartzite",
+          "region": "Spiti, Kashmir, Kumaon Himalaya",
+          "components": [
+            "Cambrian shelf sequence",
+            "Ordovician-Silurian sequence",
+            "Devonian sequence",
+            "Carboniferous sequence"
+          ]
+        },
+        {
+          "name": "Lower Gondwana (Peninsular equivalent)",
+          "lithology": "Fluvio-lacustrine sandstone, shale, coal seams",
+          "region": "Damodar Valley, Pranhita-Godavari Valley, Son Valley, Mahanadi Valley",
+          "related_supergroup": "Gondwana Supergroup - Damuda Group, Panchet Group (see earlier stratigraphy file)",
+          "components": [
+            "Talchir Formation",
+            "Karharbari Formation",
+            "Barakar Formation",
+            "Barren Measures Formation",
+            "Raniganj Formation",
+            "Panchet Formation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Aryan Group",
+      "age": "Upper Carboniferous / Jurassic to Recent (c. 300 Ma - present)",
+      "lithology_character": "Varied - continental Upper Gondwana clastics, Jurassic-Cretaceous marine sequences, Deccan flood basalts, Tertiary molasse (Siwalik), and unconsolidated Quaternary alluvium/laterite",
+      "description": "Youngest and most lithologically diverse division, spanning the final breakup-related and post-breakup sedimentation, the massive Deccan volcanism, Himalayan orogeny-related foreland deposits, and modern surficial deposits.",
+      "subdivisions": [
+        {
+          "name": "Upper Gondwana",
+          "lithology": "Sandstone, shale, occasional plant-fossil beds",
+          "region": "Pranhita-Godavari Valley, Rajmahal Hills",
+          "related_supergroup": "Gondwana Supergroup - Mahadeva Group, Rajmahal Group",
+          "components": [
+            "Pali Formation",
+            "Denwa Formation",
+            "Bagra Formation",
+            "Rajmahal Traps",
+            "Dubrajpur Formation"
+          ]
+        },
+        {
+          "name": "Jurassic marine and continental sequences",
+          "lithology": "Sandstone, shale, limestone",
+          "region": "Kutch (Gujarat), Rajasthan (Jaisalmer)"
+        },
+        {
+          "name": "Cretaceous marine sequences",
+          "lithology": "Sandstone, shale, limestone",
+          "region": "Cauvery Basin, Trichinopoly (Tamil Nadu), Narmada Valley"
+        },
+        {
+          "name": "Deccan Trap",
+          "lithology": "Tholeiitic basalt flows, with intertrappean sedimentary beds",
+          "age": "Late Cretaceous to Paleocene (c. 66 Ma)",
+          "region": "Maharashtra, Madhya Pradesh, Gujarat, Karnataka - covers ~500,000 sq km"
+        },
+        {
+          "name": "Tertiary sequence",
+          "lithology": "Marine to continental clastics; Siwalik molasse in the north",
+          "region": "Assam, Kutch, Himalayan foreland",
+          "related_supergroup": "Siwalik Group (see earlier stratigraphy file)",
+          "components": [
+            "Subathu Formation",
+            "Dagshai Formation",
+            "Kasauli Formation",
+            "Lower Siwalik Subgroup",
+            "Middle Siwalik Subgroup",
+            "Upper Siwalik Subgroup"
+          ]
+        },
+        {
+          "name": "Quaternary sequence",
+          "lithology": "Alluvium, laterite, blown sand, boulder conglomerate, coastal/deltaic deposits",
+          "region": "Indo-Gangetic Plain, coastal tracts, desert areas of Rajasthan",
+          "components": [
+            "Older alluvium",
+            "Newer alluvium",
+            "Laterite",
+            "Aeolian/desert sand",
+            "Coastal and deltaic deposits"
+          ]
+        }
+      ]
+    }
+  ],
+  "physiographic_lithological_provinces": {
+    "note": "Complementary map-based grouping used by GSI alongside the age-based divisions above; useful as a separate map layer/legend grouping",
+    "provinces": [
+      {
+        "name": "Peninsular Shield",
+        "description": "Stable craton comprising Archaean basement plus Purana basins plus Lower Gondwana (Dravidian) cover; largely unaffected by Himalayan orogeny",
+        "includes_divisions": ["Archaean Group", "Purana Group", "Lower Gondwana (Dravidian Group)"]
+      },
+      {
+        "name": "Extra-Peninsula (Himalaya)",
+        "description": "Folded and faulted marine Paleozoic-Mesozoic sequences plus Tertiary Siwalik foreland deposits, formed by the India-Asia collision",
+        "includes_divisions": ["Extra-Peninsular Paleozoic (Dravidian Group)", "Tertiary sequence (Aryan Group)"]
+      },
+      {
+        "name": "Indo-Gangetic Plain",
+        "description": "Young Quaternary alluvial fill in the foreland basin between the Peninsular Shield and the Himalaya; no exposed bedrock",
+        "includes_divisions": ["Quaternary sequence (Aryan Group)"]
+      }
+    ]
+  }
+}
