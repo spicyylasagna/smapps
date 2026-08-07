@@ -253,31 +253,43 @@ export default function App() {
 
   // 2. Load Metadata JSONs
   useEffect(() => {
-    fetch('/india_lithostratigraphy_schematic.geojson').then(r => r.json()).then(setSchematicGeojson)
-    fetch('/india_lithological_divisions.json').then(r => r.json()).then(setLithoHierarchy)
-    fetch('/data/gsi_stratigraphic_hierarchy_india_v2.json').then(r => r.json()).then(raw => {
-      setRawHierarchyData(raw)
-      const out = {}
-      if (raw.archean_basement) {
-        out['Archean Basement'] = {
-          title: raw.archean_basement.name,
-          info: raw.archean_basement,
-          craton_sequences: raw.archean_basement.craton_sequences,
-          components: raw.archean_basement.components,
-          groups: []
+    fetch('/india_lithostratigraphy_schematic.geojson')
+      .then(r => r.ok ? r.json() : null)
+      .then(data => data && setSchematicGeojson(data))
+      .catch(err => console.error('Error loading schematic GeoJSON:', err))
+
+    fetch('/india_lithological_divisions.json')
+      .then(r => r.ok ? r.json() : null)
+      .then(data => data && setLithoHierarchy(data))
+      .catch(err => console.error('Error loading lithological divisions JSON:', err))
+
+    fetch('/data/gsi_stratigraphic_hierarchy_india_v2.json')
+      .then(r => r.ok ? r.json() : null)
+      .then(raw => {
+        if (!raw) return
+        setRawHierarchyData(raw)
+        const out = {}
+        if (raw.archean_basement) {
+          out['Archean Basement'] = {
+            title: raw.archean_basement.name,
+            info: raw.archean_basement,
+            craton_sequences: raw.archean_basement.craton_sequences,
+            components: raw.archean_basement.components,
+            groups: []
+          }
         }
-      }
-      raw.supergroups?.forEach(sg => {
-        out[sg.name] = {
-          title: sg.name,
-          info: sg,
-          source: sg.source,
-          regional_variants: sg.regional_variants || null,
-          groups: sg.groups || []
-        }
+        raw.supergroups?.forEach(sg => {
+          out[sg.name] = {
+            title: sg.name,
+            info: sg,
+            source: sg.source,
+            regional_variants: sg.regional_variants || null,
+            groups: sg.groups || []
+          }
+        })
+        setSupergroupHierarchy(out)
       })
-      setSupergroupHierarchy(out)
-    })
+      .catch(err => console.error('Error loading stratigraphic hierarchy JSON:', err))
   }, [])
 
   // Cascading Craton Options based on Eon
