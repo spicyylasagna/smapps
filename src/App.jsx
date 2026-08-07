@@ -131,8 +131,70 @@ export default function App() {
         })
       }
 
-      // Add India Boundary Line for visual framing (optional outline)
+      // Add India Mask layer to hide rest of the world outside India
       fetch(INDIA_BOUNDARY).then(res => res.json()).then(collection => {
+        if (!map.getSource('india-mask')) {
+          const worldRing = [
+            [-180, -90],
+            [180, -90],
+            [180, 90],
+            [-180, 90],
+            [-180, -90]
+          ]
+
+          const features = collection.features || [collection]
+          const holeRings = []
+
+          features.forEach(f => {
+            if (!f.geometry) return
+            const geom = f.geometry
+            if (geom.type === 'Polygon') {
+              geom.coordinates.forEach(ring => {
+                if (ring && ring.length >= 3) {
+                  const closed = ring[0][0] === ring[ring.length - 1][0] && ring[0][1] === ring[ring.length - 1][1]
+                    ? ring
+                    : [...ring, ring[0]]
+                  holeRings.push(closed)
+                }
+              })
+            } else if (geom.type === 'MultiPolygon') {
+              geom.coordinates.forEach(poly => {
+                poly.forEach(ring => {
+                  if (ring && ring.length >= 3) {
+                    const closed = ring[0][0] === ring[ring.length - 1][0] && ring[0][1] === ring[ring.length - 1][1]
+                      ? ring
+                      : [...ring, ring[0]]
+                    holeRings.push(closed)
+                  }
+                })
+              })
+            }
+          })
+
+          const maskGeoJSON = {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+              type: 'Polygon',
+              coordinates: [worldRing, ...holeRings]
+            }
+          }
+
+          map.addSource('india-mask', { type: 'geojson', data: maskGeoJSON })
+          
+          if (!map.getLayer('india-mask')) {
+            map.addLayer({
+              id: 'india-mask',
+              type: 'fill',
+              source: 'india-mask',
+              paint: {
+                'fill-color': '#e8e3d8',
+                'fill-opacity': 0.95
+              }
+            })
+          }
+        }
+
         if (!map.getSource('india-border')) {
           map.addSource('india-border', { type: 'geojson', data: collection })
           map.addLayer({
@@ -142,7 +204,7 @@ export default function App() {
             paint: { 'line-color': '#2a241d', 'line-width': 1.2, 'line-opacity': 0.7 }
           })
         }
-      }).catch(err => console.warn('India boundary outline load error:', err))
+      }).catch(err => console.warn('India boundary mask load error:', err))
 
       map.on('click', 'geology-units', (e) => setSelected(e.features?.[0]?.properties ?? null))
       map.on('mouseenter', 'geology-units', () => { map.getCanvas().style.cursor = 'pointer' })
@@ -509,7 +571,12 @@ export default function App() {
           </button>
         </div>
 
-        <div className="topbar-actions"><button onClick={reset}>Reset map</button></div>
+        <div className="topbar-actions">
+          <button type="button" className="info-icon-btn" onClick={() => setShowSourceModal(true)} title="View Geological Reference Sources">
+            ⓘ <span className="btn-label">Sources</span>
+          </button>
+          <button onClick={reset}>Reset map</button>
+        </div>
       </header>
 
       {/* STRATIGRAPHY WORKBENCH PAGE */}
@@ -520,13 +587,22 @@ export default function App() {
           indianCratons={INDIAN_CRATONS}
           geologicEons={GEOLOGIC_EONS}
           onNavigateToMap={handleNavigateToMap}
+          onOpenSources={() => setShowSourceModal(true)}
         />
       )}
 
       {/* MAP VIEW CONTROLS & INSPECTOR */}
       {activeTab === 'map' && (
         <>
-          <aside className="search-card">
+          <button
+            type="button"
+            className="mobile-controls-toggle"
+            onClick={() => setMobileControlsOpen(!mobileControlsOpen)}
+          >
+            ⚙️ Controls & Filters {mobileControlsOpen ? '▲' : '▼'}
+          </button>
+
+          <aside className={`search-card ${mobileControlsOpen ? 'mobile-open' : ''}`}>
             <p className="card-kicker">Controls & Layers</p>
 
             <div className="layer-toggle-group">
@@ -586,23 +662,32 @@ export default function App() {
                 }}>
                   <option value="">Select Craton / Region...</option>
                   {cratonOptions.map(craton => (
-                    <option key={craton.id} value={craton.id}>{craton.name}</option>
+                    <option key={craton.id} value={craton.id}>{craton.name} ({craton.region})</option>
                   ))}
                 </select>
               </label>
             </div>
 
-            {/* 3. Supergroup / Reference Hierarchy Dropdown (Cascades from selected Craton) */}
+            {/* 3. Supergroup / Sequence Dropdown */}
             <div className="mode-row">
-              <label><span>Supergroup / Basement</span>
-                <select value={selectedSupergroup} onChange={e => { setSelectedSupergroup(e.target.value); setSelectedVariant(''); setSelectedGroup(''); setSelectedFormation(''); setSelectedMember(''); }}>
-                  <option value="">Select Supergroup...</option>
-                  {supergroupOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+              <label><span>Supergroup / Sequence</span>
+                <select value={selectedSupergroup} onChange={e => {
+                  const sg = e.target.value;
+                  setSelectedSupergroup(sg);
+                  setSelectedVariant('');
+                  setSelectedGroup('');
+                  setSelectedFormation('');
+                  setSelectedMember('');
+                }}>
+                  <option value="">Select Supergroup / Division...</option>
+                  {supergroupOptions.map(sgName => (
+                    <option key={sgName} value={sgName}>{sgName}</option>
+                  ))}
                 </select>
               </label>
             </div>
 
-            {/* Regional Variants Selector Tabs (Preserves parallel regional sequence structure without merging) */}
+            {/* Regional Sequence Variant Selection Tabs (For Dharwar / Bastar) */}
             {variantOptions.length > 0 && (
               <div className="variant-select-row">
                 <span className="variant-label">Regional Sequence Variant:</span>
@@ -692,26 +777,9 @@ export default function App() {
                     <div><dt>Description</dt><dd>{value(selected.descrip)}</dd></div>
                   </dl>
 
-                  {/* Source Verification Badge */}
-                  {activeSource ? (
-                    <div className="source-badge verified">
-                      <span className="badge-icon">✓</span>
-                      <div className="badge-text">
-                        <strong>Verified Academic Reference</strong>
-                        <p>{activeSource}</p>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="source-badge literature">
-                      <span className="badge-icon">📖</span>
-                      <div className="badge-text">
-                        <strong>Source</strong>
-                        <p>
-                          Chorlton, L. B. (2007). <em>Generalized geology of the world: bedrock domains and major faults in GIS format: a small-scale world geology map with an extended geological attribute database</em>. Geological Survey of Canada, Open File, 5529, 48. Natural Resources Canada. <a href="https://doi.org/10.4095/223767" target="_blank" rel="noreferrer" style={{ color: '#be5b35', wordBreak: 'break-all' }}>doi:10.4095/223767</a>
-                        </p>
-                      </div>
-                    </div>
-                  )}
+                  <button type="button" className="info-icon-btn inline-source-btn" onClick={() => setShowSourceModal(true)}>
+                    ⓘ View Geological Sources
+                  </button>
                 </div>
               ) : (
                 <div>
@@ -778,25 +846,9 @@ export default function App() {
                     </div>
                   )}
 
-                  {activeSource ? (
-                    <div className="source-badge verified" style={{ marginTop: '16px' }}>
-                      <span className="badge-icon">✓</span>
-                      <div className="badge-text">
-                        <strong>Verified Academic Reference</strong>
-                        <p>{activeSource}</p>
-                      </div>
-                    </div>
-                  ) : selectedSupergroup ? (
-                    <div className="source-badge literature" style={{ marginTop: '16px' }}>
-                      <span className="badge-icon">📖</span>
-                      <div className="badge-text">
-                        <strong>Source</strong>
-                        <p>
-                          Chorlton, L. B. (2007). <em>Generalized geology of the world: bedrock domains and major faults in GIS format: a small-scale world geology map with an extended geological attribute database</em>. Geological Survey of Canada, Open File, 5529, 48. Natural Resources Canada. <a href="https://doi.org/10.4095/223767" target="_blank" rel="noreferrer" style={{ color: '#be5b35', wordBreak: 'break-all' }}>doi:10.4095/223767</a>
-                        </p>
-                      </div>
-                    </div>
-                  ) : null}
+                  <button type="button" className="info-icon-btn inline-source-btn" onClick={() => setShowSourceModal(true)}>
+                    ⓘ View Geological Sources
+                  </button>
                 </div>
               )}
             </div>
@@ -811,6 +863,56 @@ export default function App() {
             />
           )}
         </>
+      )}
+
+      {/* Sources & Citations Popover Modal */}
+      {showSourceModal && (
+        <div className="source-modal-backdrop" onClick={() => setShowSourceModal(false)}>
+          <div className="source-modal-card" onClick={e => e.stopPropagation()}>
+            <div className="source-modal-head">
+              <div className="source-modal-title">
+                <span className="info-icon-mark">ⓘ</span>
+                <h3>Academic & Geological Sources</h3>
+              </div>
+              <button type="button" className="source-modal-close" onClick={() => setShowSourceModal(false)}>✕</button>
+            </div>
+
+            <div className="source-modal-body">
+              {activeSource && (
+                <div className="source-section active-unit-source">
+                  <h4>Selected Unit Reference</h4>
+                  <p>✓ {activeSource}</p>
+                </div>
+              )}
+
+              <div className="source-section">
+                <h4>Authoritative References & Literature</h4>
+                <ul className="source-list">
+                  <li>
+                    <strong>Chorlton, L. B. (2007)</strong>
+                    <p><em>Generalized geology of the world: bedrock domains and major faults in GIS format: a small-scale world geology map with an extended geological attribute database</em>. Geological Survey of Canada, Open File 5529, 48. Natural Resources Canada. <a href="https://doi.org/10.4095/223767" target="_blank" rel="noreferrer">doi:10.4095/223767</a></p>
+                  </li>
+                  <li>
+                    <strong>Geological Survey of India (GSI)</strong>
+                    <p>Stratigraphic Chart of India & GSI Memoirs (Vol. 124, 125 & Special Publication No. 84). Ministry of Mines, Govt. of India.</p>
+                  </li>
+                  <li>
+                    <strong>M. Ramakrishnan & R. Vaidyanadhan (2008)</strong>
+                    <p><em>Geology of India (Vol. 1 & 2)</em>. Geological Society of India, Bangalore.</p>
+                  </li>
+                  <li>
+                    <strong>M.S. Krishnan</strong>
+                    <p><em>Geology of India and Burma</em> (6th Ed.). Higginbothams / CBS Publishers.</p>
+                  </li>
+                  <li>
+                    <strong>Ravindra Kumar</strong>
+                    <p><em>Fundamentals of Historical Geology and Stratigraphy of India</em>. New Age International Publishers.</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   )

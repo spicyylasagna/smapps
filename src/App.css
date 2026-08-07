@@ -53,7 +53,6 @@
 .time-slider-footer { display: flex; justify-content: space-between; color: #7f756f; font-size: 11px; margin-top: 8px; }
 .alternate-name { margin-bottom: 15px !important; color: #8a6450 !important; }dl { margin: 16px 0 0; }dl div { padding: 10px 0; border-top: 1px solid #ebe7df; }dt { color: #8b8277; font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }dd { margin: 3px 0 0; color: #3f4140; font-size: 12px; line-height: 1.42; }.attribution { position: absolute; z-index: 2; bottom: 12px; left: 17px; color: #575b59; font-size: 11px; text-shadow: 0 1px 2px #fff; }.attribution a { color: #86442c; }
 .maplibregl-ctrl-bottom-right { bottom: 12px; right: 16px; }.maplibregl-ctrl-bottom-left { bottom: 10px; left: auto; right: 90px; }
-@media (max-width: 720px) { .topbar { left: 10px; right: 10px; top: 10px; }.topbar-actions a { display: none; }.search-card { top: 68px; left: 10px; width: calc(100% - 20px); }.inspector { display: none; }.time-slider-card { width: calc(100% - 20px); bottom: 12px; padding: 12px 12px 10px; }.time-slider-status { display: none; }.attribution { max-width: 260px; }.maplibregl-ctrl-bottom-left { left: 10px; right: auto; } }
 
 /* Geological Popup Styling */
 .geology-popup h3 {
@@ -850,42 +849,313 @@
   color: #4a3e31;
 }
 
+/* Info Button for Sources */
+.info-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  border: 1px solid #d5c8b5;
+  background: #fdfaf5;
+  color: #7b3815;
+  font-size: 11px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.info-icon-btn:hover {
+  background: #8a4a1f;
+  color: #ffffff;
+  border-color: #733c18;
+}
+.inline-source-btn {
+  margin-top: 14px;
+  width: 100%;
+  justify-content: center;
+  padding: 6px 10px;
+}
+
 /* Citations Footer at Bottom Corner */
 .stratigraphy-citations-footer {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 8px;
+  right: 14px;
   z-index: 5;
-  background: rgba(247, 241, 230, 0.96);
-  border-top: 1px solid #ded5c5;
-  padding: 4px 12px;
+}
+
+/* Sources Popover Modal */
+.source-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(22, 19, 15, 0.6);
+  backdrop-filter: blur(3px);
   display: flex;
   align-items: center;
-  gap: 10px;
-  box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
+  justify-content: center;
+  padding: 16px;
 }
-.citations-header {
+.source-modal-card {
+  width: min(560px, 100%);
+  max-height: 85vh;
+  background: #fffefd;
+  border: 1px solid #dcd3c3;
+  border-radius: 12px;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalFadeIn 0.2s ease-out;
+}
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+.source-modal-head {
   display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: 9.5px;
-  color: #73340d;
-  flex-shrink: 0;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: #f7f1e6;
+  border-bottom: 1px solid #e5dbcc;
 }
-.citation-icon { font-size: 11px; }
-.citations-list {
+.source-modal-title {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 8px;
-  font-size: 9px;
-  color: #4a4338;
+  color: #73340d;
 }
-.citation-item {
+.info-icon-mark {
+  font-size: 16px;
+  color: #be5b35;
+}
+.source-modal-title h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+  color: #2b251e;
+}
+.source-modal-close {
+  border: 0;
+  background: none;
+  font-size: 18px;
+  color: #786c5e;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.source-modal-close:hover {
+  background: #eadecc;
+  color: #2b251e;
+}
+.source-modal-body {
+  padding: 18px;
+  overflow-y: auto;
   display: flex;
-  align-items: center;
-  gap: 3px;
+  flex-direction: column;
+  gap: 16px;
 }
-.citation-author { font-weight: 750; color: #231f19; }
-.citation-title { font-style: italic; }
-.citation-publisher { color: #787063; }
+.active-unit-source {
+  background: #edf7ed;
+  border: 1px solid #b7e1cd;
+  border-radius: 6px;
+  padding: 10px 14px;
+}
+.active-unit-source h4 {
+  margin: 0 0 4px 0;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: #2e7d32;
+}
+.active-unit-source p {
+  margin: 0;
+  font-size: 12px;
+  color: #1b5e20;
+  font-weight: 600;
+}
+.source-section h4 {
+  margin: 0 0 10px 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: #8a4a1f;
+}
+.source-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.source-list li {
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #e3dacd;
+}
+.source-list li:last-child {
+  border-bottom: none;
+}
+.source-list strong {
+  font-size: 13px;
+  color: #231f19;
+}
+.source-list p {
+  margin: 4px 0 0 0;
+  font-size: 11.5px;
+  color: #595043;
+  line-height: 1.4;
+}
+.source-list a {
+  color: #be5b35;
+  font-weight: 700;
+}
+
+/* Mobile Controls Toggle Button */
+.mobile-controls-toggle {
+  display: none;
+  position: absolute;
+  top: 58px;
+  left: 10px;
+  z-index: 4;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #c9b9a6;
+  background: rgba(255, 255, 253, 0.96);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  color: #7b3815;
+  font-size: 11px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+/* MOBILE RESPONSIVE REFINEMENTS (<= 768px) */
+@media (max-width: 768px) {
+  .mobile-controls-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .topbar {
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    height: 42px;
+    padding: 0 8px;
+  }
+  .brand {
+    font-size: 12px;
+    gap: 4px;
+  }
+  .brand-mark {
+    font-size: 16px;
+  }
+  .brand small {
+    display: none;
+  }
+  .topbar-nav {
+    gap: 3px;
+  }
+  .nav-tab {
+    padding: 3px 6px;
+    font-size: 10px;
+  }
+  .topbar-actions button {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+  .btn-label {
+    display: none;
+  }
+
+  .search-card {
+    display: none;
+    top: 92px;
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-width: none;
+    max-height: 50vh;
+    padding: 10px;
+    overflow-y: auto;
+    z-index: 5;
+  }
+  .search-card.mobile-open {
+    display: block;
+  }
+
+  .inspector {
+    top: auto;
+    bottom: 84px;
+    left: 8px;
+    right: 8px;
+    width: auto;
+    min-height: auto;
+    max-height: 42vh;
+    overflow-y: auto;
+    border-radius: 10px;
+  }
+  .inspector:not(.open) {
+    transform: translateY(120%);
+  }
+  .inspector-toggle {
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%) rotate(90deg);
+    border-radius: 6px 6px 0 0;
+    border-right: 1px solid #d9d5cd;
+    border-bottom: 0;
+  }
+
+  .time-slider-card {
+    width: calc(100% - 16px);
+    bottom: 6px;
+    padding: 8px 10px 6px;
+  }
+  .time-slider-head strong {
+    font-size: 12px;
+  }
+
+  /* Stratigraphy Workbench Mobile Stacking */
+  .stratigraphy-grid {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto auto 1fr;
+    height: calc(100vh - 42px);
+    margin-top: 42px;
+  }
+  .eon-selector-panel {
+    border-right: 0;
+    border-bottom: 1px solid #e0d7c7;
+  }
+  .eon-buttons-container {
+    flex-direction: row !important;
+    overflow-x: auto;
+    padding: 6px 10px !important;
+    gap: 6px !important;
+  }
+  .eon-btn {
+    padding: 6px 12px !important;
+    white-space: nowrap;
+  }
+
+  .cratons-column {
+    border-right: 0;
+    border-bottom: 1px solid #e0d7c7;
+    max-height: 120px;
+  }
+  .cratons-list-container {
+    flex-direction: row !important;
+    overflow-x: auto;
+    padding: 6px 8px !important;
+  }
+  .craton-item-card {
+    min-width: 130px;
+    padding: 5px 8px !important;
+  }
+
+  .column-content-scroll {
+    padding: 10px 10px 60px 10px !important;
+  }
+}

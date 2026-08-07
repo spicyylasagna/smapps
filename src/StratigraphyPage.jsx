@@ -14,7 +14,8 @@ export default function StratigraphyPage({
   supergroupHierarchy, 
   indianCratons, 
   geologicEons,
-  onNavigateToMap 
+  onNavigateToMap,
+  onOpenSources
 }) {
   const [selectedEonId, setSelectedEonId] = useState('archean') // Archean selected by default
   const [selectedCratonId, setSelectedCratonId] = useState('dharwar')
@@ -480,21 +481,11 @@ export default function StratigraphyPage({
 
       </div>
 
-      {/* Bottom Right Corner Academic Citations Footer */}
+      {/* Compact Bottom Corner Sources Trigger */}
       <footer className="stratigraphy-citations-footer">
-        <div className="citations-header">
-          <span className="citation-icon">📚</span>
-          <strong>Author authoritative Academic & Geological References:</strong>
-        </div>
-        <div className="citations-list">
-          {ACADEMIC_CITATIONS.map((cit, i) => (
-            <div key={i} className="citation-item">
-              <strong className="citation-author">{cit.author}:</strong>
-              <span className="citation-title">"{cit.title}"</span>
-              <small className="citation-publisher">({cit.publisher})</small>
-            </div>
-          ))}
-        </div>
+        <button type="button" className="info-icon-btn" onClick={onOpenSources}>
+          ⓘ <span className="btn-label">Academic & Reference Sources</span>
+        </button>
       </footer>
     </div>
   )
