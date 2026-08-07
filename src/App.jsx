@@ -3,6 +3,7 @@ import { Map, NavigationControl, ScaleControl } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import './App.css'
 import GeologicTimeSlider from './GeologicTimeSlider.jsx'
+import StratigraphyPage from './StratigraphyPage.jsx'
 
 const INDIA_BOUNDS = [[67.7, 6.4], [97.5, 37.8]]
 const INDIA_CONTEXT_BOUNDS = [[35, -15], [125, 55]]
@@ -33,7 +34,7 @@ function value(v, fallback = 'Not supplied') {
 }
 // Geologic Eons of Earth history
 const GEOLOGIC_EONS = [
-  { id: 'archean', name: 'Archean Eon', ageRange: '4000 - 2500 Ma', defaultAge: 4000 },
+  { id: 'archean', name: 'Archean Eon', ageRange: '3600 - 2500 Ma', defaultAge: 4000 },
   { id: 'proterozoic', name: 'Proterozoic Eon', ageRange: '2500 - 541 Ma', defaultAge: 2500 },
   { id: 'phanerozoic', name: 'Phanerozoic Eon', ageRange: '541 Ma - Present', defaultAge: 541 },
 ]
@@ -46,7 +47,7 @@ const INDIAN_CRATONS = [
     name: 'Dharwar Craton',
     region: 'Karnataka, Goa, Western AP',
     eonId: 'archean',
-    ageRange: 'c. 3400–2500 Ma',
+    ageRange: 'c. 3600–2500 Ma',
     supergroups: ['Dharwar Supergroup', 'Archean Basement'],
   },
   {
@@ -164,7 +165,10 @@ export default function App() {
   const mapRef = useRef(null)
   const [isReady, setIsReady] = useState(false)
 
-  // SHARED STATE FOR LAYERS
+  // VIEW TAB NAVIGATION STATE ('map' | 'stratigraphy')
+  const [activeTab, setActiveTab] = useState('map')
+
+  // SHARED STATE FOR LAYERS (Slider starts at 4000 Ma; first map layer appears at 3600 Ma)
   const [currentAge, setCurrentAge] = useState(4000)
   const [showChronostrat, setShowChronostrat] = useState(true)
   const [showLithostrat, setShowLithostrat] = useState(true)
@@ -359,7 +363,7 @@ export default function App() {
 
   const selectedGroupObj = useMemo(() => {
     if (!currentSupergroupObj) return null
-    let groupsList = currentSupergroupObj.regional_variants 
+    let groupsList = currentSupergroupObj.regional_variants
       ? (selectedVariantObj?.groups || [])
       : (currentSupergroupObj.groups || [])
     return groupsList.find(g => g.name === selectedGroup) || null
@@ -413,7 +417,8 @@ export default function App() {
     let filters = ['all'];
 
     if (showChronostrat && !macrostratIgnoreAge) {
-      const b_age = ['to-number', ['coalesce', ['get', 'best_age_bottom'], ['get', 'best_b_age'], ['get', 'b_age'], ['get', 'b_int_age'], 0]];
+      const raw_b_age = ['to-number', ['coalesce', ['get', 'best_age_bottom'], ['get', 'best_b_age'], ['get', 'b_age'], ['get', 'b_int_age'], 0]];
+      const b_age = ['min', raw_b_age, 3600];
       filters.push(['>=', b_age, currentAge]);
     }
 
@@ -481,7 +486,7 @@ export default function App() {
     }
     if (!targetAge) {
       const SUPERGROUP_AGES = {
-        'archean': 3400,
+        'archean': 3600,
         'dharwar': 3000,
         'aravalli': 2200,
         'mahakoshal': 2000,
@@ -531,8 +536,8 @@ export default function App() {
       });
       if (targetFeature && targetFeature.geometry) {
         const rawCoords = targetFeature.geometry.coordinates;
-        const coords = targetFeature.geometry.type === 'MultiPolygon' 
-          ? rawCoords.flat(2) 
+        const coords = targetFeature.geometry.type === 'MultiPolygon'
+          ? rawCoords.flat(2)
           : rawCoords.flat(1);
         let minLng = 180, maxLng = -180, minLat = 90, maxLat = -90;
         coords.forEach(([lng, lat]) => {
@@ -555,286 +560,344 @@ export default function App() {
     mapRef.current?.fitBounds(INDIA_BOUNDS, { padding: 52 })
   }
 
+  const handleNavigateToMap = (cratonName, unitName) => {
+    setActiveTab('map');
+    if (unitName) {
+      const matchedKey = Object.keys(supergroupHierarchy).find(k =>
+        k.toLowerCase().includes(unitName.toLowerCase()) || unitName.toLowerCase().includes(k.toLowerCase())
+      );
+      if (matchedKey) {
+        setSelectedSupergroup(matchedKey);
+      }
+    }
+  }
+
   return (
     <div className="atlas">
       <div ref={container} className="map" />
 
       <header className="topbar">
         <div className="brand"><span className="brand-mark">◈</span><span>India Geological Atlas</span><small>beta</small></div>
+
+        <div className="topbar-nav">
+          <button
+            type="button"
+            className={`nav-tab ${activeTab === 'map' ? 'active' : ''}`}
+            onClick={() => setActiveTab('map')}
+          >
+            🗺️ Map View
+          </button>
+          <button
+            type="button"
+            className={`nav-tab ${activeTab === 'stratigraphy' ? 'active' : ''}`}
+            onClick={() => setActiveTab('stratigraphy')}
+          >
+            📜 Stratigraphy
+          </button>
+        </div>
+
         <div className="topbar-actions"><button onClick={reset}>Reset map</button></div>
       </header>
 
-      <aside className="search-card">
-        <p className="card-kicker">Controls & Layers</p>
+      {/* STRATIGRAPHY WORKBENCH PAGE */}
+      {activeTab === 'stratigraphy' && (
+        <StratigraphyPage
+          rawHierarchyData={rawHierarchyData}
+          supergroupHierarchy={supergroupHierarchy}
+          indianCratons={INDIAN_CRATONS}
+          geologicEons={GEOLOGIC_EONS}
+          onNavigateToMap={handleNavigateToMap}
+        />
+      )}
 
-        <div className="layer-toggle-group">
-          <label className="toggle-item">
-            <input type="checkbox" checked={showChronostrat} onChange={e => setShowChronostrat(e.target.checked)} />
-            <span>Show Chronstratigraphic Divisions</span>
-          </label>
-          <label className="toggle-item">
-            <input type="checkbox" checked={showLithostrat} onChange={e => setShowLithostrat(e.target.checked)} />
-            <span>Show Lithostratigraphic Divisions</span>
-          </label>
-          <label className={`toggle-item ${(!showChronostrat && !showLithostrat) ? 'disabled' : ''}`}>
-            <input type="checkbox" disabled={!showChronostrat && !showLithostrat} checked={macrostratIgnoreAge} onChange={e => setMacrostratIgnoreAge(e.target.checked)} />
-            <span>Ignore Age (Show Full Map)</span>
-          </label>
-        </div>
+      {/* MAP VIEW CONTROLS & INSPECTOR */}
+      {activeTab === 'map' && (
+        <>
+          <aside className="search-card">
+            <p className="card-kicker">Controls & Layers</p>
 
-        <label className="search-box">
-          <span>⌕</span>
-          <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search Macrostrat units..." />
-        </label>
-
-        {/* 1. Geologic Eons Dropdown */}
-        <div className="mode-row">
-          <label><span>Geologic Eon</span>
-            <select value={selectedEon} onChange={e => {
-              const eonId = e.target.value;
-              setSelectedEon(eonId);
-              setSelectedCraton('');
-              setSelectedSupergroup('');
-              setSelectedVariant('');
-              setSelectedGroup('');
-              setSelectedFormation('');
-              setSelectedMember('');
-              const eonObj = GEOLOGIC_EONS.find(x => x.id === eonId);
-              if (eonObj) setCurrentAge(eonObj.defaultAge);
-            }}>
-              <option value="">All Eons (Show Full Timeline)</option>
-              {GEOLOGIC_EONS.map(eon => (
-                <option key={eon.id} value={eon.id}>{eon.name}</option>
-              ))}
-            </select>
-          </label>
-        </div>
-
-        {/* 2. Indian Cratons Dropdown (Cascades from selected Eon) */}
-        <div className="mode-row">
-          <label><span>Indian Craton / Basin</span>
-            <select value={selectedCraton} onChange={e => {
-              const cratonId = e.target.value;
-              setSelectedCraton(cratonId);
-              setSelectedSupergroup('');
-              setSelectedVariant('');
-              setSelectedGroup('');
-              setSelectedFormation('');
-              setSelectedMember('');
-            }}>
-              <option value="">Select Craton / Region...</option>
-              {cratonOptions.map(craton => (
-                <option key={craton.id} value={craton.id}>{craton.name}</option>
-              ))}
-            </select>
-          </label>
-        </div>
-
-        {/* 3. Supergroup / Reference Hierarchy Dropdown (Cascades from selected Craton) */}
-        <div className="mode-row">
-          <label><span>Supergroup / Basement</span>
-            <select value={selectedSupergroup} onChange={e => { setSelectedSupergroup(e.target.value); setSelectedVariant(''); setSelectedGroup(''); setSelectedFormation(''); setSelectedMember(''); }}>
-              <option value="">Select Supergroup...</option>
-              {supergroupOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
-            </select>
-          </label>
-        </div>
-
-        {/* Regional Variants Selector Tabs (Preserves parallel regional sequence structure without merging) */}
-        {variantOptions.length > 0 && (
-          <div className="variant-select-row">
-            <span className="variant-label">Regional Sequence Variant:</span>
-            <div className="variant-pill-group">
-              {variantOptions.map(vName => (
-                <button
-                  key={vName}
-                  type="button"
-                  className={`variant-pill ${selectedVariant === vName ? 'active' : ''}`}
-                  onClick={() => {
-                    setSelectedVariant(vName);
-                    setSelectedGroup('');
-                    setSelectedFormation('');
-                    setSelectedMember('');
-                  }}
-                >
-                  {vName}
-                </button>
-              ))}
+            <div className="layer-toggle-group">
+              <label className="toggle-item">
+                <input type="checkbox" checked={showChronostrat} onChange={e => setShowChronostrat(e.target.checked)} />
+                <span>Show Chronstratigraphic Divisions</span>
+              </label>
+              <label className="toggle-item">
+                <input type="checkbox" checked={showLithostrat} onChange={e => setShowLithostrat(e.target.checked)} />
+                <span>Show Lithostratigraphic Divisions</span>
+              </label>
+              <label className={`toggle-item ${(!showChronostrat && !showLithostrat) ? 'disabled' : ''}`}>
+                <input type="checkbox" disabled={!showChronostrat && !showLithostrat} checked={macrostratIgnoreAge} onChange={e => setMacrostratIgnoreAge(e.target.checked)} />
+                <span>Ignore Age (Show Full Map)</span>
+              </label>
             </div>
-          </div>
-        )}
 
-        <div className="dropdown-row">
-          <label><span>Group / Unit</span>
-            <select disabled={!selectedSupergroup} value={selectedGroup} onChange={e => { setSelectedGroup(e.target.value); setSelectedFormation(''); setSelectedMember(''); }}>
-              <option value="">Select Group...</option>
-              {groupOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
-            </select>
-          </label>
-          <label><span>Formation</span>
-            <select disabled={!selectedGroup || formationOptions.length === 0} value={selectedFormation} onChange={e => { setSelectedFormation(e.target.value); setSelectedMember(''); }}>
-              <option value="">Select Formation...</option>
-              {formationOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
-            </select>
-          </label>
-        </div>
-
-        {/* Member Level Dropdown */}
-        {memberOptions.length > 0 && (
-          <div className="mode-row" style={{ marginTop: '8px' }}>
-            <label><span>Member</span>
-              <select value={selectedMember} onChange={e => setSelectedMember(e.target.value)}>
-                <option value="">Select Member...</option>
-                {memberOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
-              </select>
+            <label className="search-box">
+              <span>⌕</span>
+              <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search Macrostrat units..." />
             </label>
-          </div>
-        )}
 
-        <button
-          type="button"
-          className="clear-selections-btn"
-          disabled={!selectedEon && !selectedCraton && !selectedSupergroup && !selectedGroup && !selectedFormation && !selectedMember}
-          onClick={() => {
-            setSelectedEon('');
-            setSelectedCraton('');
-            setSelectedSupergroup('');
-            setSelectedVariant('');
-            setSelectedGroup('');
-            setSelectedFormation('');
-            setSelectedMember('');
-            setSelected(null);
-            mapRef.current?.fitBounds(INDIA_BOUNDS, { padding: 52 });
-          }}
-        >
-          Clear selections
-        </button>
-      </aside>
-
-      <aside className={`inspector ${panelOpen ? 'open' : ''}`}>
-        <button className="inspector-toggle" onClick={() => setPanelOpen(!panelOpen)}>{panelOpen ? '›' : '‹'}</button>
-        <div className="inspector-content">
-          <p className="card-kicker">Unit Details</p>
-          {selected ? (
-            <div className="details-view">
-              <h2>{selected.strat_name || selected.name || 'Unnamed Unit'}</h2>
-              <dl>
-                <div>
-                  <dt>Age</dt>
-                  <dd>
-                    {age(selected.best_age_bottom ?? selected.best_b_age ?? selected.b_age)} – {age(selected.best_age_top ?? selected.best_t_age ?? selected.t_age)}
-                  </dd>
-                </div>
-                <div><dt>Interval</dt><dd>{value(selected.b_int || selected.t_int || selected.age)}</dd></div>
-                <div><dt>Lithology</dt><dd>{value(selected.lith)}</dd></div>
-                <div><dt>Description</dt><dd>{value(selected.descrip)}</dd></div>
-              </dl>
-
-              {/* Source Verification Badge */}
-              {activeSource ? (
-                <div className="source-badge verified">
-                  <span className="badge-icon">✓</span>
-                  <div className="badge-text">
-                    <strong>Verified Academic Reference</strong>
-                    <p>{activeSource}</p>
-                  </div>
-                </div>
-              ) : (
-                <div className="source-badge literature">
-                  <span className="badge-icon">📖</span>
-                  <div className="badge-text">
-                    <strong>General Literature / GSI Memoir</strong>
-                    <p>Compiled from standard regional GSI survey memoirs & general literature.</p>
-                  </div>
-                </div>
-              )}
+            {/* 1. Geologic Eons Dropdown */}
+            <div className="mode-row">
+              <label><span>Geologic Eon</span>
+                <select value={selectedEon} onChange={e => {
+                  const eonId = e.target.value;
+                  setSelectedEon(eonId);
+                  setSelectedCraton('');
+                  setSelectedSupergroup('');
+                  setSelectedVariant('');
+                  setSelectedGroup('');
+                  setSelectedFormation('');
+                  setSelectedMember('');
+                  const eonObj = GEOLOGIC_EONS.find(x => x.id === eonId);
+                  if (eonObj) setCurrentAge(eonObj.defaultAge);
+                }}>
+                  <option value="">All Eons (Show Full Timeline)</option>
+                  {GEOLOGIC_EONS.map(eon => (
+                    <option key={eon.id} value={eon.id}>{eon.name}</option>
+                  ))}
+                </select>
+              </label>
             </div>
-          ) : (
-            <div>
-              <h2>{selectedMember || selectedFormation || selectedGroup || selectedVariant || selectedSupergroup || 'Select a unit'}</h2>
-              <p>{selectedSupergroup ? 'Division hierarchy selection up to members:' : 'Click the map to see details from the Macrostrat database or select from hierarchy controls.'}</p>
-              
-              {/* Detailed Breakdown Up To Members Displaying Age and Source for Each Division */}
-              {currentSupergroupObj && (
-                <div className="hierarchy-breakdown">
-                  <div className="breakdown-card">
-                    <div className="breakdown-level">
-                      <span className="level-badge supergroup">SUPERGROUP</span>
-                      <strong className="level-title">{currentSupergroupObj.title}</strong>
-                      <div className="level-details">
-                        <p><strong>Age:</strong> {currentSupergroupObj.info?.age || 'Not specified'}</p>
-                        <p><strong>Source:</strong> {currentSupergroupObj.source || 'General Literature / GSI Memoir'}</p>
+
+            {/* 2. Indian Cratons Dropdown (Cascades from selected Eon) */}
+            <div className="mode-row">
+              <label><span>Indian Craton / Basin</span>
+                <select value={selectedCraton} onChange={e => {
+                  const cratonId = e.target.value;
+                  setSelectedCraton(cratonId);
+                  setSelectedSupergroup('');
+                  setSelectedVariant('');
+                  setSelectedGroup('');
+                  setSelectedFormation('');
+                  setSelectedMember('');
+                }}>
+                  <option value="">Select Craton / Region...</option>
+                  {cratonOptions.map(craton => (
+                    <option key={craton.id} value={craton.id}>{craton.name}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+
+            {/* 3. Supergroup / Reference Hierarchy Dropdown (Cascades from selected Craton) */}
+            <div className="mode-row">
+              <label><span>Supergroup / Basement</span>
+                <select value={selectedSupergroup} onChange={e => { setSelectedSupergroup(e.target.value); setSelectedVariant(''); setSelectedGroup(''); setSelectedFormation(''); setSelectedMember(''); }}>
+                  <option value="">Select Supergroup...</option>
+                  {supergroupOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                </select>
+              </label>
+            </div>
+
+            {/* Regional Variants Selector Tabs (Preserves parallel regional sequence structure without merging) */}
+            {variantOptions.length > 0 && (
+              <div className="variant-select-row">
+                <span className="variant-label">Regional Sequence Variant:</span>
+                <div className="variant-pill-group">
+                  {variantOptions.map(vName => (
+                    <button
+                      key={vName}
+                      type="button"
+                      className={`variant-pill ${selectedVariant === vName ? 'active' : ''}`}
+                      onClick={() => {
+                        setSelectedVariant(vName);
+                        setSelectedGroup('');
+                        setSelectedFormation('');
+                        setSelectedMember('');
+                      }}
+                    >
+                      {vName}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="dropdown-row">
+              <label><span>Group / Unit</span>
+                <select disabled={!selectedSupergroup} value={selectedGroup} onChange={e => { setSelectedGroup(e.target.value); setSelectedFormation(''); setSelectedMember(''); }}>
+                  <option value="">Select Group...</option>
+                  {groupOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                </select>
+              </label>
+              <label><span>Formation</span>
+                <select disabled={!selectedGroup || formationOptions.length === 0} value={selectedFormation} onChange={e => { setSelectedFormation(e.target.value); setSelectedMember(''); }}>
+                  <option value="">Select Formation...</option>
+                  {formationOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                </select>
+              </label>
+            </div>
+
+            {/* Member Level Dropdown */}
+            {memberOptions.length > 0 && (
+              <div className="mode-row" style={{ marginTop: '8px' }}>
+                <label><span>Member</span>
+                  <select value={selectedMember} onChange={e => setSelectedMember(e.target.value)}>
+                    <option value="">Select Member...</option>
+                    {memberOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                  </select>
+                </label>
+              </div>
+            )}
+
+            <button
+              type="button"
+              className="clear-selections-btn"
+              disabled={!selectedEon && !selectedCraton && !selectedSupergroup && !selectedGroup && !selectedFormation && !selectedMember}
+              onClick={() => {
+                setSelectedEon('');
+                setSelectedCraton('');
+                setSelectedSupergroup('');
+                setSelectedVariant('');
+                setSelectedGroup('');
+                setSelectedFormation('');
+                setSelectedMember('');
+                setSelected(null);
+                mapRef.current?.fitBounds(INDIA_BOUNDS, { padding: 52 });
+              }}
+            >
+              Clear selections
+            </button>
+          </aside>
+
+          <aside className={`inspector ${panelOpen ? 'open' : ''}`}>
+            <button className="inspector-toggle" onClick={() => setPanelOpen(!panelOpen)}>{panelOpen ? '›' : '‹'}</button>
+            <div className="inspector-content">
+              <p className="card-kicker">Unit Details</p>
+              {selected ? (
+                <div className="details-view">
+                  <h2>{selected.strat_name || selected.name || 'Unnamed Unit'}</h2>
+                  <dl>
+                    <div>
+                      <dt>Age</dt>
+                      <dd>
+                        {age(selected.best_age_bottom ?? selected.best_b_age ?? selected.b_age)} – {age(selected.best_age_top ?? selected.best_t_age ?? selected.t_age)}
+                      </dd>
+                    </div>
+                    <div><dt>Interval</dt><dd>{value(selected.b_int || selected.t_int || selected.age)}</dd></div>
+                    <div><dt>Lithology</dt><dd>{value(selected.lith)}</dd></div>
+                    <div><dt>Description</dt><dd>{value(selected.descrip)}</dd></div>
+                  </dl>
+
+                  {/* Source Verification Badge */}
+                  {activeSource ? (
+                    <div className="source-badge verified">
+                      <span className="badge-icon">✓</span>
+                      <div className="badge-text">
+                        <strong>Verified Academic Reference</strong>
+                        <p>{activeSource}</p>
                       </div>
                     </div>
-
-                    {selectedVariantObj && (
-                      <div className="breakdown-level variant">
-                        <span className="level-badge variant">REGIONAL VARIANT</span>
-                        <strong className="level-title">{selectedVariantObj.variant_name}</strong>
-                        <div className="level-details">
-                          <p><strong>Age:</strong> {selectedVariantObj.age || currentSupergroupObj.info?.age || 'Not specified'}</p>
-                          <p><strong>Source:</strong> {selectedVariantObj.source || currentSupergroupObj.source || 'General Literature'}</p>
-                        </div>
+                  ) : (
+                    <div className="source-badge literature">
+                      <span className="badge-icon">📖</span>
+                      <div className="badge-text">
+                        <strong>Source</strong>
+                        <p>
+                          Chorlton, L. B. (2007). <em>Generalized geology of the world: bedrock domains and major faults in GIS format: a small-scale world geology map with an extended geological attribute database</em>. Geological Survey of Canada, Open File, 5529, 48. Natural Resources Canada. <a href="https://doi.org/10.4095/223767" target="_blank" rel="noreferrer" style={{ color: '#be5b35', wordBreak: 'break-all' }}>doi:10.4095/223767</a>
+                        </p>
                       </div>
-                    )}
-
-                    {selectedGroupObj && (
-                      <div className="breakdown-level group">
-                        <span className="level-badge group">GROUP / UNIT</span>
-                        <strong className="level-title">{selectedGroupObj.name}</strong>
-                        <div className="level-details">
-                          <p><strong>Age:</strong> {selectedGroupObj.age || selectedVariantObj?.age || currentSupergroupObj.info?.age || 'Not specified'}</p>
-                          <p><strong>Source:</strong> {selectedGroupObj.source || selectedVariantObj?.source || currentSupergroupObj.source || 'General Literature'}</p>
-                        </div>
-                      </div>
-                    )}
-
-                    {selectedFormationObj && (
-                      <div className="breakdown-level formation">
-                        <span className="level-badge formation">FORMATION</span>
-                        <strong className="level-title">{selectedFormationObj.name}</strong>
-                        <div className="level-details">
-                          <p><strong>Age:</strong> {selectedFormationObj.age || selectedGroupObj?.age || selectedVariantObj?.age || currentSupergroupObj.info?.age || 'Not specified'}</p>
-                          <p><strong>Source:</strong> {selectedFormationObj.source || selectedGroupObj?.source || selectedVariantObj?.source || currentSupergroupObj.source || 'General Literature'}</p>
-                        </div>
-                      </div>
-                    )}
-
-                    {selectedMemberObj && (
-                      <div className="breakdown-level member">
-                        <span className="level-badge member">MEMBER</span>
-                        <strong className="level-title">{selectedMemberObj.name || selectedMemberObj}</strong>
-                        <div className="level-details">
-                          <p><strong>Age:</strong> {selectedMemberObj.age || selectedFormationObj?.age || selectedGroupObj?.age || selectedVariantObj?.age || currentSupergroupObj.info?.age || 'Not specified'}</p>
-                          <p><strong>Source:</strong> {selectedMemberObj.source || selectedFormationObj?.source || selectedGroupObj?.source || selectedVariantObj?.source || currentSupergroupObj.source || 'General Literature'}</p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
-              )}
+              ) : (
+                <div>
+                  <h2>{selectedMember || selectedFormation || selectedGroup || selectedVariant || selectedSupergroup || 'Select a unit'}</h2>
+                  <p>{selectedSupergroup ? 'Division hierarchy selection up to members:' : 'Click the map to see details from the Macrostrat database or select from hierarchy controls.'}</p>
 
-              {activeSource && (
-                <div className="source-badge verified" style={{ marginTop: '16px' }}>
-                  <span className="badge-icon">✓</span>
-                  <div className="badge-text">
-                    <strong>Verified Academic Reference</strong>
-                    <p>{activeSource}</p>
-                  </div>
+                  {/* Detailed Breakdown Up To Members Displaying Age and Source for Each Division */}
+                  {currentSupergroupObj && (
+                    <div className="hierarchy-breakdown">
+                      <div className="breakdown-card">
+                        <div className="breakdown-level">
+                          <span className="level-badge supergroup">SUPERGROUP</span>
+                          <strong className="level-title">{currentSupergroupObj.title}</strong>
+                          <div className="level-details">
+                            <p><strong>Age:</strong> {currentSupergroupObj.info?.age || 'Not specified'}</p>
+                            <p><strong>Source:</strong> {currentSupergroupObj.source || 'General Literature / GSI Memoir'}</p>
+                          </div>
+                        </div>
+
+                        {selectedVariantObj && (
+                          <div className="breakdown-level variant">
+                            <span className="level-badge variant">REGIONAL VARIANT</span>
+                            <strong className="level-title">{selectedVariantObj.variant_name}</strong>
+                            <div className="level-details">
+                              <p><strong>Age:</strong> {selectedVariantObj.age || currentSupergroupObj.info?.age || 'Not specified'}</p>
+                              <p><strong>Source:</strong> {selectedVariantObj.source || currentSupergroupObj.source || 'General Literature'}</p>
+                            </div>
+                          </div>
+                        )}
+
+                        {selectedGroupObj && (
+                          <div className="breakdown-level group">
+                            <span className="level-badge group">GROUP / UNIT</span>
+                            <strong className="level-title">{selectedGroupObj.name}</strong>
+                            <div className="level-details">
+                              <p><strong>Age:</strong> {selectedGroupObj.age || selectedVariantObj?.age || currentSupergroupObj.info?.age || 'Not specified'}</p>
+                              <p><strong>Source:</strong> {selectedGroupObj.source || selectedVariantObj?.source || currentSupergroupObj.source || 'General Literature'}</p>
+                            </div>
+                          </div>
+                        )}
+
+                        {selectedFormationObj && (
+                          <div className="breakdown-level formation">
+                            <span className="level-badge formation">FORMATION</span>
+                            <strong className="level-title">{selectedFormationObj.name}</strong>
+                            <div className="level-details">
+                              <p><strong>Age:</strong> {selectedFormationObj.age || selectedGroupObj?.age || selectedVariantObj?.age || currentSupergroupObj.info?.age || 'Not specified'}</p>
+                              <p><strong>Source:</strong> {selectedFormationObj.source || selectedGroupObj?.source || selectedVariantObj?.source || currentSupergroupObj.source || 'General Literature'}</p>
+                            </div>
+                          </div>
+                        )}
+
+                        {selectedMemberObj && (
+                          <div className="breakdown-level member">
+                            <span className="level-badge member">MEMBER</span>
+                            <strong className="level-title">{selectedMemberObj.name || selectedMemberObj}</strong>
+                            <div className="level-details">
+                              <p><strong>Age:</strong> {selectedMemberObj.age || selectedFormationObj?.age || selectedGroupObj?.age || selectedVariantObj?.age || currentSupergroupObj.info?.age || 'Not specified'}</p>
+                              <p><strong>Source:</strong> {selectedMemberObj.source || selectedFormationObj?.source || selectedGroupObj?.source || selectedVariantObj?.source || currentSupergroupObj.source || 'General Literature'}</p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {activeSource ? (
+                    <div className="source-badge verified" style={{ marginTop: '16px' }}>
+                      <span className="badge-icon">✓</span>
+                      <div className="badge-text">
+                        <strong>Verified Academic Reference</strong>
+                        <p>{activeSource}</p>
+                      </div>
+                    </div>
+                  ) : selectedSupergroup ? (
+                    <div className="source-badge literature" style={{ marginTop: '16px' }}>
+                      <span className="badge-icon">📖</span>
+                      <div className="badge-text">
+                        <strong>Source</strong>
+                        <p>
+                          Chorlton, L. B. (2007). <em>Generalized geology of the world: bedrock domains and major faults in GIS format: a small-scale world geology map with an extended geological attribute database</em>. Geological Survey of Canada, Open File, 5529, 48. Natural Resources Canada. <a href="https://doi.org/10.4095/223767" target="_blank" rel="noreferrer" style={{ color: '#be5b35', wordBreak: 'break-all' }}>doi:10.4095/223767</a>
+                        </p>
+                      </div>
+                    </div>
+                  ) : null}
                 </div>
               )}
             </div>
-          )}
-        </div>
-      </aside>
+          </aside>
 
-      {schematicGeojson && (
-        <GeologicTimeSlider
-          map={mapRef.current}
-          geojsonData={schematicGeojson}
-          currentAge={currentAge}
-          setCurrentAge={setCurrentAge}
-        />
+          {schematicGeojson && (
+            <GeologicTimeSlider
+              map={mapRef.current}
+              geojsonData={schematicGeojson}
+              currentAge={currentAge}
+              setCurrentAge={setCurrentAge}
+            />
+          )}
+        </>
       )}
     </div>
   )

@@ -3,7 +3,7 @@
   "source_note": "Compiled from GSI memoirs/state geology volumes and peer-reviewed lithostratigraphic literature. Ranks (Supergroup/Group/Subgroup) and formation names for several basins (Mahakoshal, Chhattisgarh, Bhima, Kurnool) are still debated among workers and have been revised multiple times; alternative schemes are noted where relevant. Member-level names exist only for a minority of formations. Cross-check against the latest official GSI Stratigraphic Chart of India for authoritative current usage.",
   "archean_basement": {
     "name": "Peninsular Gneissic Complex (PGC)",
-    "age": "Paleoarchean to Neoarchean (c. 3400-2500 Ma)",
+    "age": "Eoarchean to Neoarchean (c. 3600-2500 Ma)",
     "description": "Composite basement of TTG gneisses, migmatites, and granites on which the Proterozoic supergroups were unconformably deposited. Not stratified in the formal Group/Formation sense; regionally subdivided and named differently across cratons.",
     "components": [
       {"name": "Older Metamorphic Group / Sargur Group type supracrustals", "region": "Dharwar Craton, Karnataka", "note": "Oldest enclaves within PGC, includes BIF, ultramafics, pelites - see craton_sequences.dharwar for Ramakrishnan-sourced detail"},
