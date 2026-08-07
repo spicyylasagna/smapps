@@ -222,15 +222,8 @@ export default function App() {
         },
         paint: { 'fill-color': ['coalesce', ['get', 'color'], '#b99463'], 'fill-opacity': 0.72 },
       })
-      map.addLayer({
-        id: 'geology-outline', type: 'line', source: 'macrostrat', 'source-layer': 'units',
-        layout: {
-          'line-sort-key': ['-', 4000, ['to-number', ['coalesce', ['get', 'best_age_bottom'], ['get', 'best_b_age'], ['get', 'b_age'], 0]]]
-        },
-        paint: { 'line-color': '#554a3d', 'line-width': 0.45, 'line-opacity': 0.65 },
-      })
-
-      // Load India Mask
+      
+      // Load India Mask (Add BEFORE geology-units so geology units are always drawn on top!)
       fetch(INDIA_BOUNDARY).then(res => res.json()).then(collection => {
         if (!map.getSource('india-mask')) {
           const geometry = collection.features?.[0]?.geometry
@@ -239,8 +232,27 @@ export default function App() {
           const indiaHoles = polygons.map(p => p[0].slice().reverse())
           const mask = { type: 'Feature', geometry: { type: 'Polygon', coordinates: [outerRing, ...indiaHoles] } }
           map.addSource('india-mask', { type: 'geojson', data: mask })
-          map.addLayer({ id: 'india-mask', type: 'fill', source: 'india-mask', paint: { 'fill-color': '#e8e3d8', 'fill-opacity': 0.94 } })
+          if (map.getLayer('geology-units')) {
+            map.addLayer({ id: 'india-mask', type: 'fill', source: 'india-mask', paint: { 'fill-color': '#e8e3d8', 'fill-opacity': 0.8 } }, 'geology-units')
+          } else {
+            map.addLayer({ id: 'india-mask', type: 'fill', source: 'india-mask', paint: { 'fill-color': '#e8e3d8', 'fill-opacity': 0.8 } })
+          }
         }
+      }).catch(err => console.warn('India boundary mask load error:', err))
+
+      map.addLayer({
+        id: 'geology-units', type: 'fill', source: 'macrostrat', 'source-layer': 'units',
+        layout: {
+          'fill-sort-key': ['-', 4000, ['to-number', ['coalesce', ['get', 'best_age_bottom'], ['get', 'best_b_age'], ['get', 'b_age'], 0]]]
+        },
+        paint: { 'fill-color': ['coalesce', ['get', 'color'], '#b99463'], 'fill-opacity': 0.72 },
+      })
+      map.addLayer({
+        id: 'geology-outline', type: 'line', source: 'macrostrat', 'source-layer': 'units',
+        layout: {
+          'line-sort-key': ['-', 4000, ['to-number', ['coalesce', ['get', 'best_age_bottom'], ['get', 'best_b_age'], ['get', 'b_age'], 0]]]
+        },
+        paint: { 'line-color': '#554a3d', 'line-width': 0.45, 'line-opacity': 0.65 },
       })
 
       map.on('click', 'geology-units', (e) => setSelected(e.features?.[0]?.properties ?? null))
@@ -428,7 +440,7 @@ export default function App() {
     // 2. Build the Filter Array
     let filters = ['all'];
 
-    if (showChronostrat && !macrostratIgnoreAge) {
+    if (showChronostrat && !macrostratIgnoreAge && currentAge < 4000) {
       const raw_b_age = ['to-number', ['coalesce', ['get', 'best_age_bottom'], ['get', 'best_b_age'], ['get', 'b_age'], ['get', 'b_int_age'], 0]];
       const b_age = ['min', raw_b_age, 3600];
       filters.push(['>=', b_age, currentAge]);

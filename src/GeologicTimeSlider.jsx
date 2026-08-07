@@ -84,15 +84,27 @@ export default function GeologicTimeSlider({ map, geojsonData, currentAge, setCu
 
   useEffect(() => {
     if (!map || !map.getLayer('schematic-fill')) return
-    // Show layer once currentAge reaches age_min_ma (formation start) and keep visible till present (0 Ma)
-    const filter = ['>=', ['to-number', ['get', 'age_min_ma']], currentAge]
-    map.setFilter('schematic-fill', filter)
-    map.setFilter('schematic-line', filter)
+    
+    // At initial 4000 Ma state, show all schematic geology features
+    // When slider is moved (< 4000 Ma), filter features by age_min_ma >= currentAge
+    if (currentAge === 4000) {
+      map.setFilter('schematic-fill', null)
+      map.setFilter('schematic-line', null)
+      if (geojsonData?.features) {
+        setActiveDivisions([...new Set(geojsonData.features.map(f => f.properties.classical_division))])
+      }
+    } else {
+      const filter = ['>=', ['to-number', ['get', 'age_min_ma']], currentAge]
+      map.setFilter('schematic-fill', filter)
+      map.setFilter('schematic-line', filter)
 
-    const divisions = geojsonData.features
-      .filter(f => f.properties.age_min_ma >= currentAge)
-      .map(f => f.properties.classical_division)
-    setActiveDivisions([...new Set(divisions)])
+      if (geojsonData?.features) {
+        const divisions = geojsonData.features
+          .filter(f => f.properties.age_min_ma >= currentAge)
+          .map(f => f.properties.classical_division)
+        setActiveDivisions([...new Set(divisions)])
+      }
+    }
   }, [currentAge, map, geojsonData])
 
   // Play / Pause Animation Loop
