@@ -7,7 +7,7 @@ import StratigraphyPage from './StratigraphyPage.jsx'
 
 const INDIA_BOUNDS = [[67.7, 6.4], [97.5, 37.8]]
 const INDIA_CONTEXT_BOUNDS = [[35, -15], [125, 55]]
-const MACROSTRAT_TILES = 'https://tileserver.development.svc.macrostrat.org/carto/{z}/{x}/{y}.mvt'
+const MACROSTRAT_TILES = 'https://tiles.macrostrat.org/carto/{z}/{x}/{y}.mvt'
 const INDIA_BOUNDARY = 'https://media.githubusercontent.com/media/wmgeolab/geoBoundaries/9469f09592ced973a3448cf66b6100b741b64c0d/releaseData/gbOpen/IND/ADM0/geoBoundaries-IND-ADM0.geojson'
 
 const BASE_STYLE = {
@@ -39,174 +39,67 @@ const GEOLOGIC_EONS = [
   { id: 'phanerozoic', name: 'Phanerozoic Eon', ageRange: '541 Ma - Present', defaultAge: 541 },
 ]
 
-// Indian Cratons & Basins with Eon and Supergroup Associations
+// Indian Cratons
 const INDIAN_CRATONS = [
-  // Archean Eon
-  {
-    id: 'dharwar',
-    name: 'Dharwar Craton',
-    region: 'Karnataka, Goa, Western AP',
-    eonId: 'archean',
-    ageRange: 'c. 3600–2500 Ma',
-    supergroups: ['Dharwar Supergroup', 'Archean Basement'],
-  },
-  {
-    id: 'bastar',
-    name: 'Bastar Craton',
-    region: 'Chhattisgarh, Odisha, MP',
-    eonId: 'archean',
-    ageRange: 'c. 3600–2500 Ma',
-    supergroups: ['Archean Basement'],
-  },
-  {
-    id: 'singhbhum',
-    name: 'Singhbhum Craton',
-    region: 'Jharkhand, Northern Odisha',
-    eonId: 'archean',
-    ageRange: 'c. 3500–2500 Ma',
-    supergroups: ['Archean Basement'],
-  },
-  {
-    id: 'bundelkhand',
-    name: 'Bundelkhand Craton',
-    region: 'Madhya Pradesh, Southern UP',
-    eonId: 'archean',
-    ageRange: 'c. 3300–2500 Ma',
-    supergroups: ['Archean Basement'],
-  },
-  {
-    id: 'aravalli',
-    name: 'Aravalli Craton / Belt',
-    region: 'Rajasthan, Northern Gujarat',
-    eonId: 'archean',
-    ageRange: 'c. 3300–2500 Ma',
-    supergroups: ['Archean Basement'],
-  },
+  { id: 'dharwar', name: 'Dharwar Craton', eonId: 'archean', region: 'Karnataka / Goa / AP', ageRange: '3600 - 2500 Ma', supergroups: ['Archean Basement', 'Dharwar Supergroup'] },
+  { id: 'bastar', name: 'Bastar Craton', eonId: 'archean', region: 'Chhattisgarh / Odisha / MP', ageRange: '3600 - 2500 Ma', supergroups: ['Archean Basement', 'Chhattisgarh Supergroup'] },
+  { id: 'singhbhum', name: 'Singhbhum Craton', eonId: 'archean', region: 'Jharkhand / Odisha', ageRange: '3500 - 2500 Ma', supergroups: ['Archean Basement', 'Kolhan Supergroup'] },
+  { id: 'bundelkhand', name: 'Bundelkhand Craton', eonId: 'archean', region: 'MP / UP', ageRange: '3500 - 2500 Ma', supergroups: ['Archean Basement', 'Vindhyan Supergroup', 'Bijawar Group'] },
+  { id: 'aravalli', name: 'Aravalli Craton', eonId: 'archean', region: 'Rajasthan / Gujarat', ageRange: '3300 - 2500 Ma', supergroups: ['Archean Basement', 'Aravalli Supergroup', 'Delhi Supergroup'] },
 
-  // Proterozoic Eon
-  {
-    id: 'cuddapah_basin',
-    name: 'Cuddapah Basin',
-    region: 'Andhra Pradesh, Telangana',
-    eonId: 'proterozoic',
-    ageRange: 'c. 1900–500 Ma',
-    supergroups: ['Cuddapah Supergroup', 'Kurnool Supergroup'],
-  },
-  {
-    id: 'vindhyan_basin',
-    name: 'Vindhyan Basin',
-    region: 'MP, UP, Rajasthan',
-    eonId: 'proterozoic',
-    ageRange: 'c. 1700–650 Ma',
-    supergroups: ['Vindhyan Supergroup', 'Mahakoshal Supergroup'],
-  },
-  {
-    id: 'aravalli_delhi_belt',
-    name: 'Aravalli-Delhi Proterozoic Belt',
-    region: 'Rajasthan, Haryana',
-    eonId: 'proterozoic',
-    ageRange: 'c. 2200–1000 Ma',
-    supergroups: ['Aravalli Supergroup', 'Delhi Supergroup'],
-  },
-  {
-    id: 'kaladgi_bhima_basin',
-    name: 'Kaladgi-Bhima Basin',
-    region: 'Northern Karnataka',
-    eonId: 'proterozoic',
-    ageRange: 'c. 1800–1000 Ma',
-    supergroups: ['Kaladgi Supergroup', 'Bhima Supergroup'],
-  },
-  {
-    id: 'chhattisgarh_basin',
-    name: 'Chhattisgarh Basin',
-    region: 'Chhattisgarh, Odisha',
-    eonId: 'proterozoic',
-    ageRange: 'c. 1500–1000 Ma',
-    supergroups: ['Chhattisgarh Supergroup'],
-  },
+  // Proterozoic Basins
+  { id: 'cuddapah_basin', name: 'Cuddapah Basin', eonId: 'proterozoic', region: 'Andhra Pradesh', ageRange: '2000 - 500 Ma', supergroups: ['Cuddapah Supergroup', 'Kurnool Group'] },
+  { id: 'vindhyan_basin', name: 'Vindhyan Basin', eonId: 'proterozoic', region: 'MP / UP / Rajasthan / Bihar', ageRange: '1700 - 600 Ma', supergroups: ['Vindhyan Supergroup'] },
+  { id: 'chhattisgarh_basin', name: 'Chhattisgarh Basin', eonId: 'proterozoic', region: 'Chhattisgarh / Odisha', ageRange: '1500 - 700 Ma', supergroups: ['Chhattisgarh Supergroup'] },
+  { id: 'kaladgi_bhima_basin', name: 'Kaladgi-Bhima Basin', eonId: 'proterozoic', region: 'Karnataka / Maharashtra', ageRange: '1600 - 600 Ma', supergroups: ['Kaladgi Supergroup', 'Bhima Group'] },
+  { id: 'mahakoshal_belt', name: 'Mahakoshal Fold Belt', eonId: 'proterozoic', region: 'MP / UP / Jharkhand', ageRange: '2400 - 1800 Ma', supergroups: ['Mahakoshal Group'] },
 
-  // Phanerozoic Eon (Only Phanerozoic sequences)
-  {
-    id: 'spiti_basin',
-    name: 'Spiti Basin (Tethyan Himalaya)',
-    region: 'Himachal Pradesh',
-    eonId: 'phanerozoic',
-    ageRange: 'c. 541–252 Ma',
-    supergroups: ['Paleozoic of Spiti'],
-  },
-  {
-    id: 'kashmir_basin',
-    name: 'Kashmir Basin (Tethyan Himalaya)',
-    region: 'Jammu & Kashmir',
-    eonId: 'phanerozoic',
-    ageRange: 'c. 541–252 Ma',
-    supergroups: ['Paleozoic of Kashmir'],
-  },
-  {
-    id: 'gondwana_basins',
-    name: 'Gondwana Basins (Peninsular India)',
-    region: 'Damodar, Mahanadi, Godavari',
-    eonId: 'phanerozoic',
-    ageRange: 'c. 300–100 Ma',
-    supergroups: ['Gondwana Supergroup'],
-  },
-  {
-    id: 'deccan_traps',
-    name: 'Deccan Traps / Volcanic Province',
-    region: 'Maharashtra, MP, Gujarat',
-    eonId: 'phanerozoic',
-    ageRange: 'c. 66 Ma',
-    supergroups: ['Deccan Traps'],
-  },
+  // Phanerozoic Basins
+  { id: 'spiti_basin', name: 'Spiti Basin (Tethyan)', eonId: 'phanerozoic', region: 'Himachal Pradesh', ageRange: '541 - 0 Ma', supergroups: ['Paleozoic of Spiti'] },
+  { id: 'kashmir_basin', name: 'Kashmir Basin (Tethyan)', eonId: 'phanerozoic', region: 'Jammu & Kashmir', ageRange: '541 - 0 Ma', supergroups: ['Paleozoic of Kashmir'] },
+  { id: 'gondwana_basins', name: 'Gondwana Basins', eonId: 'phanerozoic', region: 'Damodar / Son / Mahanadi / Pranhita-Godavari', ageRange: '300 - 150 Ma', supergroups: ['Gondwana Supergroup'] },
+  { id: 'deccan_province', name: 'Deccan Volcanic Province', eonId: 'phanerozoic', region: 'Maharashtra / MP / Gujarat', ageRange: '66 - 60 Ma', supergroups: ['Deccan Traps'] },
 ]
 
 export default function App() {
   const container = useRef(null)
   const mapRef = useRef(null)
+
+  const [activeTab, setActiveTab] = useState('map') // 'map' | 'stratigraphy'
+  const [panelOpen, setPanelOpen] = useState(true)
+  const [selected, setSelected] = useState(null)
+  const [search, setSearch] = useState('')
   const [isReady, setIsReady] = useState(false)
 
-  // VIEW TAB NAVIGATION STATE ('map' | 'stratigraphy')
-  const [activeTab, setActiveTab] = useState('map')
-
-  // SHARED STATE FOR LAYERS (Slider starts at 4000 Ma; first map layer appears at 3600 Ma)
-  const [currentAge, setCurrentAge] = useState(4000)
-  const [showChronostrat, setShowChronostrat] = useState(true)
-  const [showLithostrat, setShowLithostrat] = useState(true)
-  const [macrostratIgnoreAge, setMacrostratIgnoreAge] = useState(false)
-
-  // EON & CRATON FILTER STATE
+  // Filtering Controls
   const [selectedEon, setSelectedEon] = useState('')
   const [selectedCraton, setSelectedCraton] = useState('')
-
-  // SIDEBAR & SEARCH STATE
-  const [search, setSearch] = useState('')
-  const [selected, setSelected] = useState(null)
-  const [panelOpen, setPanelOpen] = useState(true)
-
-  // HIERARCHY STATE
-  const [rawHierarchyData, setRawHierarchyData] = useState(null)
-  const [supergroupHierarchy, setSupergroupHierarchy] = useState({})
   const [selectedSupergroup, setSelectedSupergroup] = useState('')
   const [selectedVariant, setSelectedVariant] = useState('')
   const [selectedGroup, setSelectedGroup] = useState('')
   const [selectedFormation, setSelectedFormation] = useState('')
   const [selectedMember, setSelectedMember] = useState('')
-  const [divisionMode, setDivisionMode] = useState('stratigraphic')
-  const [lithoHierarchy, setLithoHierarchy] = useState(null)
-  const [selectedDivision, setSelectedDivision] = useState('')
-  const [selectedSubdivision, setSelectedSubdivision] = useState('')
-  const [selectedComponent, setSelectedComponent] = useState('')
-  const [schematicGeojson, setSchematicGeojson] = useState(null)
 
-  // 1. Initialize Map
+  const [showChronostrat, setShowChronostrat] = useState(true)
+  const [showLithostrat, setShowLithostrat] = useState(true)
+  const [macrostratIgnoreAge, setMacrostratIgnoreAge] = useState(true)
+  const [currentAge, setCurrentAge] = useState(4000)
+
+  // Loaded Datasets
+  const [schematicGeojson, setSchematicGeojson] = useState(null)
+  const [lithoHierarchy, setLithoHierarchy] = useState(null)
+  const [rawHierarchyData, setRawHierarchyData] = useState(null)
+  const [supergroupHierarchy, setSupergroupHierarchy] = useState({})
+
+  // 1. Initialize MapLibre
   useEffect(() => {
+    if (!container.current) return
     const map = new Map({
       container: container.current,
       style: BASE_STYLE,
       bounds: INDIA_BOUNDS,
-      fitBoundsOptions: { padding: 52, maxZoom: 5.4 },
-      maxBounds: INDIA_CONTEXT_BOUNDS,
-      minZoom: 3.2,
+      fitBoundsOptions: { padding: 48 },
+      maxBounds: [[35, -15], [125, 55]],
       renderWorldCopies: false,
     })
     mapRef.current = map
@@ -238,24 +131,18 @@ export default function App() {
         })
       }
 
-      // Load India Mask (Add BEFORE geology-units so geology units are always drawn on top!)
+      // Add India Boundary Line for visual framing (optional outline)
       fetch(INDIA_BOUNDARY).then(res => res.json()).then(collection => {
-        if (!map.getSource('india-mask')) {
-          const geometry = collection.features?.[0]?.geometry
-          const outerRing = [[35, -15], [125, -15], [125, 55], [35, 55], [35, -15]]
-          const polygons = geometry.type === 'Polygon' ? [geometry.coordinates] : geometry.coordinates
-          const indiaHoles = polygons.map(p => p[0].slice().reverse())
-          const mask = { type: 'Feature', geometry: { type: 'Polygon', coordinates: [outerRing, ...indiaHoles] } }
-          map.addSource('india-mask', { type: 'geojson', data: mask })
-          if (!map.getLayer('india-mask')) {
-            if (map.getLayer('geology-units')) {
-              map.addLayer({ id: 'india-mask', type: 'fill', source: 'india-mask', paint: { 'fill-color': '#e8e3d8', 'fill-opacity': 0.8 } }, 'geology-units')
-            } else {
-              map.addLayer({ id: 'india-mask', type: 'fill', source: 'india-mask', paint: { 'fill-color': '#e8e3d8', 'fill-opacity': 0.8 } })
-            }
-          }
+        if (!map.getSource('india-border')) {
+          map.addSource('india-border', { type: 'geojson', data: collection })
+          map.addLayer({
+            id: 'india-border',
+            type: 'line',
+            source: 'india-border',
+            paint: { 'line-color': '#2a241d', 'line-width': 1.2, 'line-opacity': 0.7 }
+          })
         }
-      }).catch(err => console.warn('India boundary mask load error:', err))
+      }).catch(err => console.warn('India boundary outline load error:', err))
 
       map.on('click', 'geology-units', (e) => setSelected(e.features?.[0]?.properties ?? null))
       map.on('mouseenter', 'geology-units', () => { map.getCanvas().style.cursor = 'pointer' })
