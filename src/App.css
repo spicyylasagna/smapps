@@ -1,0 +1,152 @@
+.atlas { height: 100vh; overflow: hidden; position: relative; background: #e8e3d8; color: #2b2d2f; }
+.map { position: absolute; inset: 0; }
+.topbar { position: absolute; z-index: 2; top: 18px; left: 20px; right: 20px; height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px 0 18px; border: 1px solid #dedbd3; border-radius: 8px; background: rgba(255, 255, 253, .96); box-shadow: 0 4px 18px rgba(34, 30, 23, .14); }
+.brand { display: flex; align-items: center; gap: 9px; color: #292d2f; font-size: 16px; font-weight: 750; letter-spacing: -.01em; }.brand-mark { color: #be5b35; font-size: 22px; }.brand small { padding: 2px 5px; border-radius: 4px; color: #837568; background: #f3eee7; font-size: 10px; letter-spacing: .05em; text-transform: uppercase; }
+.topbar-actions { display: flex; gap: 12px; align-items: center; font-size: 13px; }.topbar button, .topbar a { border: 0; background: none; color: #4d514e; font: inherit; text-decoration: none; cursor: pointer; }.topbar button:hover, .topbar a:hover, a:hover { color: #a34325; }
+.search-card, .inspector { position: absolute; z-index: 2; border: 1px solid #d9d5cd; border-radius: 8px; background: rgba(255, 255, 253, .96); box-shadow: 0 5px 20px rgba(34, 30, 23, .15); }
+.search-card { top: 72px; left: 16px; width: 240px; min-width: 200px; max-width: calc(100% - 40px); padding: 12px; resize: horizontal; overflow: auto; }
+.card-kicker { margin: 0 0 6px; color: #9a573b; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.search-card h1, .inspector h2 { margin: 0; color: #282b2d; font-size: 15px; font-weight: 700; letter-spacing: -.02em; }
+.search-box { display: flex; align-items: center; gap: 8px; margin-top: 12px; padding: 0 8px; border: 1px solid #cac6bd; border-radius: 5px; background: #fff; color: #766f66; }
+.search-box span { font-size: 18px; }
+.search-box input { width: 100%; height: 34px; border: 0; outline: 0; background: transparent; color: #2b2d2f; font: inherit; font-size: 13px; }
+.mode-row { margin-top: 10px; }
+.mode-row label { display: grid; gap: 6px; color: #6b665f; font-size: 12px; }
+.mode-row span { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #817b73; }
+.mode-row select { width: 100%; border: 1px solid #cac6bd; border-radius: 5px; padding: 8px 10px; background: #fff; color: #2b2d2f; font: inherit; font-size: 13px; }
+.dropdown-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+.dropdown-row label { display: grid; gap: 6px; color: #6b665f; font-size: 12px; }
+.dropdown-row span { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #817b73; }
+.dropdown-row select { width: 100%; border: 1px solid #cac6bd; border-radius: 5px; padding: 8px 10px; background: #fff; color: #2b2d2f; font: inherit; font-size: 13px; }
+.age-control { margin-top: 16px; padding-top: 14px; border-top: 1px solid #e9e5dd; }.control-heading { display: flex; justify-content: space-between; color: #55534e; font-size: 12px; }.control-heading span { color: #817b73; }.age-control label { display: grid; grid-template-columns: 78px 1fr; align-items: center; gap: 6px; margin-top: 12px; color: #6b665f; font-size: 12px; }.age-control input { width: 100%; accent-color: #af5636; }.coverage-note { margin: 15px 0 0; color: #77726b; font-size: 11px; line-height: 1.45; }
+.inspector { top: 84px; right: 20px; width: 260px; min-height: 180px; transition: transform .2s ease; }
+.inspector-content { padding: 16px; }
+.inspector:not(.open) { transform: translateX(286px); }
+.inspector-toggle { position: absolute; top: 12px; left: -28px; width: 28px; height: 30px; border: 1px solid #d9d5cd; border-right: 0; border-radius: 6px 0 0 6px; background: #fffefd; color: #635e56; font-size: 20px; cursor: pointer; }
+.inspector h2 { margin: 0 0 8px; }
+.inspector p { margin: 0; color: #6e6a64; font-size: 13px; line-height: 1.4; }
+.legend { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-top: 22px; padding-top: 14px; border-top: 1px solid #e9e5dd; color: #726d65; font-size: 11px; }.legend-swatch { width: 15px; height: 10px; background: #bb9163; border: 1px solid #695840; }.legend-line { width: 16px; height: 2px; margin-left: 6px; background: #26231f; }
+.time-slider-card { position: absolute; z-index: 2; left: 50%; bottom: 24px; transform: translateX(-50%); width: min(720px, calc(100% - 32px)); padding: 14px 16px 12px; border: 1px solid #d7d0c5; border-radius: 12px; background: rgba(255, 252, 247, .96); box-shadow: 0 8px 24px rgba(30, 24, 19, .16); }
+.time-slider-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.time-slider-kicker { margin: 0 0 2px; color: #9c633f; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.time-slider-head strong { color: #2b2d2f; font-size: 16px; }
+.time-slider-status { max-width: 60%; color: #6b665f; font-size: 12px; text-align: right; }
+.time-slider-shell { position: relative; padding: 20px 0 8px; }
+.time-slider-input { position: relative; z-index: 2; width: 100%; margin: 0; appearance: none; background: transparent; cursor: pointer; }
+.time-slider-input::-webkit-slider-runnable-track { height: 6px; border-radius: 999px; background: transparent; }
+.time-slider-input::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px; margin-top: -6px; border: 2px solid #fff; border-radius: 50%; background: #8a4a1f; box-shadow: 0 3px 10px rgba(0, 0, 0, .18); }
+.time-slider-input::-moz-range-track { height: 6px; border-radius: 999px; background: transparent; }
+.time-slider-input::-moz-range-thumb { width: 18px; height: 18px; border: 2px solid #fff; border-radius: 50%; background: #8a4a1f; box-shadow: 0 3px 10px rgba(0, 0, 0, .18); }
+.time-slider-track { position: absolute; inset: 18px 0 auto; height: 6px; border-radius: 999px; background: linear-gradient(90deg, #d7c0a5, #f0dfc2); }
+.time-slider-fill { position: absolute; inset: 18px auto auto 0; height: 6px; border-radius: 999px; background: linear-gradient(90deg, #84513a, #c96e30); }
+.time-slider-ticks { position: absolute; inset: 0 0 0 0; pointer-events: none; }
+.time-slider-tick { position: absolute; top: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; transform: translateX(-50%); }
+.time-slider-tick-line { width: 1px; height: 16px; background: #7d6d5d; }
+.time-slider-tick-label { color: #6a584b; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+.time-slider-tick-age { color: #8b7a6d; font-size: 10px; }
+.time-slider-footer { display: flex; justify-content: space-between; color: #7f756f; font-size: 11px; margin-top: 8px; }
+.alternate-name { margin-bottom: 15px !important; color: #8a6450 !important; }dl { margin: 16px 0 0; }dl div { padding: 10px 0; border-top: 1px solid #ebe7df; }dt { color: #8b8277; font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }dd { margin: 3px 0 0; color: #3f4140; font-size: 12px; line-height: 1.42; }.attribution { position: absolute; z-index: 2; bottom: 12px; left: 17px; color: #575b59; font-size: 11px; text-shadow: 0 1px 2px #fff; }.attribution a { color: #86442c; }
+.maplibregl-ctrl-bottom-right { bottom: 12px; right: 16px; }.maplibregl-ctrl-bottom-left { bottom: 10px; left: auto; right: 90px; }
+@media (max-width: 720px) { .topbar { left: 10px; right: 10px; top: 10px; }.topbar-actions a { display: none; }.search-card { top: 68px; left: 10px; width: calc(100% - 20px); }.inspector { display: none; }.time-slider-card { width: calc(100% - 20px); bottom: 12px; padding: 12px 12px 10px; }.time-slider-status { display: none; }.attribution { max-width: 260px; }.maplibregl-ctrl-bottom-left { left: 10px; right: auto; } }
+
+/* Geological Popup Styling */
+.geology-popup h3 {
+  margin: 0 0 8px 0;
+  font-size: 15px;
+  color: #2c3e50;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 4px;
+}
+
+.geology-popup p {
+  margin: 3px 0;
+  font-size: 12px;
+  color: #555;
+}
+
+.uncertain-tag {
+  color: #d35400 !important;
+  font-weight: bold;
+  font-size: 10px !important;
+  margin-top: 8px !important;
+}
+
+/* Time Slider Ticks Refinement */
+.time-slider-ticks {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  pointer-events: none;
+}
+
+.time-slider-tick {
+  position: absolute;
+  top: -12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(-50%);
+}
+
+.time-slider-tick-line {
+  width: 1px;
+  height: 28px;
+  background: rgba(0, 0, 0, 0.15);
+  margin-bottom: 4px;
+}
+
+.time-slider-tick-label {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #7f8c8d;
+  white-space: nowrap;
+}
+
+.time-slider-tick-age {
+  font-size: 8px;
+  color: #bdc3c7;
+}
+
+/* Ensure the slider input is on top of ticks */
+.time-slider-input {
+  position: relative;
+  z-index: 5;
+}
+.layer-toggle-group {
+  margin: 10px 0 20px 0;
+  padding: 12px;
+  background: #f7f3ed;
+  border-radius: 8px;
+  border: 1px solid #e0ddd5;
+}
+
+.toggle-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  color: #5d5a54;
+}
+
+.toggle-item input {
+  cursor: pointer;
+}
+
+.toggle-item.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.geology-popup h3 {
+  margin: 0 0 5px 0;
+  font-size: 14px;
+}
+.geology-popup p {
+  margin: 0;
+  font-size: 12px;
+}

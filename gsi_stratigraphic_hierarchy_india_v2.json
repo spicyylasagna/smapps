@@ -1,0 +1,340 @@
+{
+  "title": "Archean Basement (Peninsular Gneissic Complex) and Precambrian-Proterozoic Supergroups of India",
+  "source_note": "Compiled from GSI memoirs/state geology volumes and peer-reviewed lithostratigraphic literature. Ranks (Supergroup/Group/Subgroup) and formation names for several basins (Mahakoshal, Chhattisgarh, Bhima, Kurnool) are still debated among workers and have been revised multiple times; alternative schemes are noted where relevant. Member-level names exist only for a minority of formations. Cross-check against the latest official GSI Stratigraphic Chart of India for authoritative current usage.",
+  "archean_basement": {
+    "name": "Peninsular Gneissic Complex (PGC)",
+    "age": "Paleoarchean to Neoarchean (c. 3400-2500 Ma)",
+    "description": "Composite basement of TTG gneisses, migmatites, and granites on which the Proterozoic supergroups were unconformably deposited. Not stratified in the formal Group/Formation sense; regionally subdivided and named differently across cratons.",
+    "components": [
+      {"name": "Older Metamorphic Group / Sargur Group type supracrustals", "region": "Dharwar Craton, Karnataka", "note": "Oldest enclaves within PGC, includes BIF, ultramafics, pelites"},
+      {"name": "Peninsular Gneiss (sensu stricto)", "region": "Dharwar Craton, Karnataka", "note": "Dominant tonalite-trondhjemite-granodiorite (TTG) gneiss, multiple phases"},
+      {"name": "Closepet Granite", "region": "Dharwar Craton, Karnataka", "note": "Late Archean granite intrusion, often mapped separately from PGC gneisses"},
+      {"name": "Bundelkhand Gneissic Complex (BnGC)", "region": "Bundelkhand Craton, Madhya Pradesh/Uttar Pradesh", "note": "Basement to Bijawar Group and Vindhyan Supergroup"},
+      {"name": "Bastar Gneissic Complex", "region": "Bastar Craton, Chhattisgarh/Odisha", "note": "Basement to Chhattisgarh Supergroup"},
+      {"name": "Chhotanagpur Granite Gneissic Complex (CGGC)", "region": "Chhotanagpur Plateau, Jharkhand/Bihar/West Bengal", "note": "Basement/host to Mahakoshal-equivalent supracrustals in the east"},
+      {"name": "Banded Gneissic Complex (BGC)", "region": "Aravalli-Delhi belt, Rajasthan", "note": "Basement to Aravalli and Delhi Supergroups, includes Bhilwara Supergroup gneisses"},
+      {"name": "Sandur/Dharwar Gneissic Complex", "region": "Eastern Dharwar Craton, Karnataka/Andhra Pradesh", "note": "Basement to Cuddapah and Kurnool basins"}
+    ]
+  },
+  "supergroups": [
+    {
+      "id": 1,
+      "name": "Dharwar Supergroup",
+      "age": "Neoarchean (c. 3000-2500 Ma)",
+      "region": "Western & Eastern Dharwar Craton, Karnataka",
+      "unconformably_overlies": "Peninsular Gneissic Complex (Peninsular Gneiss / Older Metamorphic Group)",
+      "groups": [
+        {
+          "name": "Sargur Group",
+          "note": "Oldest supracrustal assemblage; treated by some as pre-Dharwar basement enclaves rather than base of the Supergroup",
+          "formations": [
+            {"name": "Banded Iron Formation (BIF) - ultramafic assemblage"},
+            {"name": "Fuchsite quartzite-kyanite/sillimanite schist assemblage"}
+          ]
+        },
+        {
+          "name": "Bababudan Group",
+          "formations": [
+            {"name": "Bababudan Quartzite-Conglomerate Formation"},
+            {"name": "Chikmagalur Volcanic Formation"}
+          ]
+        },
+        {
+          "name": "Chitradurga Group",
+          "formations": [
+            {"name": "Vanivilas Formation", "members": ["Talya Member", "Hiriyur Member"]},
+            {"name": "Ingaldhal Formation"},
+            {"name": "Chitradurga Conglomerate-Greywacke Formation"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Aravalli Supergroup",
+      "age": "Paleoproterozoic (c. 2200-1800 Ma)",
+      "region": "Aravalli Range, Rajasthan (older than and unconformably overlain by Delhi Supergroup)",
+      "unconformably_overlies": "Banded Gneissic Complex / Bhilwara Supergroup basement",
+      "groups": [
+        {
+          "name": "Lower Aravalli Group",
+          "formations": [
+            {"name": "Jhamarkotra Formation", "members": ["Phosphorite Member", "Dolomite Member"]},
+            {"name": "Delwara Formation"}
+          ]
+        },
+        {
+          "name": "Udaipur Group (Upper Aravalli)",
+          "formations": [
+            {"name": "Debari Formation"},
+            {"name": "Udaipur Formation"}
+          ]
+        },
+        {
+          "name": "Jharol Group (Upper Aravalli, western belt)",
+          "formations": [
+            {"name": "Jharol Formation"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Mahakoshal Supergroup",
+      "rank_note": "Most literature ranks this as the 'Mahakoshal Group' (a greenstone/supracrustal belt), not a full Supergroup; included here at Supergroup level per request, with Group as the next rank down",
+      "age": "Paleoproterozoic (c. 2000-1800 Ma)",
+      "region": "Son Valley / Central Indian Tectonic Zone (CITZ), Madhya Pradesh - Uttar Pradesh border",
+      "unconformably_overlies": "Bundelkhand Gneissic Complex / granite basement",
+      "groups": [
+        {
+          "name": "Mahakoshal Group (western sector - Sleemanabad-Parsoi-Dudhmaniya scheme)",
+          "formations": [
+            {"name": "Sleemanabad (Saleemnabad) Formation", "note": "Carbonates, bedded/massive chert, BIF, quartz arenite"},
+            {"name": "Parsoi Formation", "note": "Meta-argillite, meta-greywacke, pyroclastics"},
+            {"name": "Dudhmaniya Formation", "note": "Quartzite and BIF"}
+          ]
+        },
+        {
+          "name": "Mahakoshal Group (eastern sector - Chitrangi-Agori-Parsoi scheme)",
+          "note": "Alternative formation scheme used by Nair, Jain & Yedekar (1995) for the eastern part of the belt; intruded by the Dudhi Granitoid Complex",
+          "formations": [
+            {"name": "Chitrangi Formation"},
+            {"name": "Agori Formation"},
+            {"name": "Parsoi Formation (eastern sector)"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Cuddapah Supergroup",
+      "age": "Paleoproterozoic to Neoproterozoic (c. 1900-1000 Ma)",
+      "region": "Cuddapah Basin, Andhra Pradesh",
+      "unconformably_overlies": "Dharwar Craton basement / Closepet Granite",
+      "groups": [
+        {
+          "name": "Papaghni Group",
+          "formations": [
+            {"name": "Gulcheru Formation", "members": ["Basal Conglomerate Member", "Quartzite Member"]},
+            {"name": "Vempalle Formation", "members": ["Dolostone Member", "Chert Breccia Member"]}
+          ]
+        },
+        {
+          "name": "Chitravati Group",
+          "formations": [
+            {"name": "Pulivendla Formation"},
+            {"name": "Tadpatri Formation", "members": ["Lower Shale Member", "Upper Limestone-Shale Member"]},
+            {"name": "Gandikota Formation"}
+          ]
+        },
+        {
+          "name": "Nallamalai Group",
+          "formations": [
+            {"name": "Bairenkonda Formation"},
+            {"name": "Cumbum Formation", "members": ["Pullampet Member"]}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Delhi Supergroup",
+      "age": "Paleoproterozoic to Mesoproterozoic (c. 1700-1000 Ma)",
+      "region": "Aravalli Range, Rajasthan (unconformably overlies Aravalli Supergroup)",
+      "unconformably_overlies": "Aravalli Supergroup / Banded Gneissic Complex",
+      "groups": [
+        {
+          "name": "Alwar Group",
+          "formations": [
+            {"name": "Kushalgarh Formation"},
+            {"name": "Golwa-Gangutana Formation", "members": ["Marble Member (Alwar area)"]}
+          ]
+        },
+        {
+          "name": "Ajabgarh Group",
+          "formations": [
+            {"name": "Bayana Formation"},
+            {"name": "Delwara Formation (Ajabgarh)"},
+            {"name": "Kishangarh Formation"},
+            {"name": "Thanagazi Formation"},
+            {"name": "Asarwas Formation"},
+            {"name": "Tasing Formation"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Kaladgi Supergroup",
+      "age": "Paleoproterozoic to Mesoproterozoic (c. 1800-1300 Ma)",
+      "region": "Bijapur-Belgaum-Bagalkot area, Karnataka",
+      "unconformably_overlies": "Dharwar Craton basement (Peninsular Gneiss)",
+      "groups": [
+        {
+          "name": "Bagalkot Group (Lower Kaladgi)",
+          "subgroups": [
+            {
+              "name": "Lokapur Subgroup",
+              "formations": [
+                {"name": "Yadgiri Formation"},
+                {"name": "Chikkashellikeri Formation"}
+              ]
+            },
+            {
+              "name": "Simikere Subgroup",
+              "formations": [
+                {"name": "Ramdurg Formation"}
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Badami Group (Upper Kaladgi)",
+          "formations": [
+            {"name": "Badami Formation"},
+            {"name": "Motur Formation"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Chhattisgarh Supergroup",
+      "age": "Mesoproterozoic (c. 1500-1000 Ma)",
+      "region": "Chhattisgarh Basin (Hirri and Baradwar sub-basins), Bastar Craton, Chhattisgarh/Odisha",
+      "unconformably_overlies": "Bastar Gneissic Complex",
+      "groups": [
+        {
+          "name": "Singhora Group",
+          "note": "Basal group, restricted to the Singhora sub-basin",
+          "formations": [
+            {"name": "Lohardih Formation"},
+            {"name": "Gomarda Formation"},
+            {"name": "Kansapathar Formation"}
+          ]
+        },
+        {
+          "name": "Chandarpur Group",
+          "formations": [
+            {"name": "Lohardih Formation"},
+            {"name": "Gomarda Formation"},
+            {"name": "Kansapathar Formation"},
+            {"name": "Chaporadih Formation", "note": "Southern Chhattisgarh/Khariar sector equivalent"}
+          ]
+        },
+        {
+          "name": "Raipur Group",
+          "formations": [
+            {"name": "Charmuria Limestone Formation"},
+            {"name": "Gunderdehi Shale Formation"},
+            {"name": "Chandi Limestone Formation", "members": ["Deodongar Member"]},
+            {"name": "Tarenga Formation (Hirri sub-basin equivalent)"},
+            {"name": "Saradih Limestone Formation"},
+            {"name": "Hirri Formation"},
+            {"name": "Maniari Formation"}
+          ]
+        },
+        {
+          "name": "Kharsiya Group",
+          "note": "Newly proposed uppermost group, Baradwar sub-basin",
+          "formations": [
+            {"name": "Churtela Shale Formation"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Vindhyan Supergroup",
+      "age": "Paleoproterozoic to Neoproterozoic (c. 1700-650 Ma, age still debated)",
+      "region": "Vindhyan Basin, Madhya Pradesh, Uttar Pradesh, Rajasthan",
+      "unconformably_overlies": "Bundelkhand Gneissic Complex / Bijawar Group / Mahakoshal Group",
+      "groups": [
+        {
+          "name": "Semri Group (Lower Vindhyan)",
+          "formations": [
+            {"name": "Deoland Formation"},
+            {"name": "Koldaha Shale Formation"},
+            {"name": "Arangi Formation"},
+            {"name": "Chorhat Sandstone Formation", "members": ["Salkhan Limestone Member"]},
+            {"name": "Rampur Shale Formation"},
+            {"name": "Kajrahat Limestone Formation"},
+            {"name": "Rohtas Limestone Formation"},
+            {"name": "Porcellanite Formation"}
+          ]
+        },
+        {
+          "name": "Kaimur Group (Upper Vindhyan)",
+          "formations": [
+            {"name": "Bijaygarh Shale Formation"},
+            {"name": "Dhandraul Sandstone Formation"}
+          ]
+        },
+        {
+          "name": "Rewa Group (Upper Vindhyan)",
+          "formations": [
+            {"name": "Panna Shale Formation"},
+            {"name": "Jhiri Shale Formation"},
+            {"name": "Rewa Sandstone Formation"}
+          ]
+        },
+        {
+          "name": "Bhander Group (Upper Vindhyan)",
+          "formations": [
+            {"name": "Ganurgarh Shale Formation"},
+            {"name": "Bhander Limestone Formation", "members": ["Lakheri Member"]},
+            {"name": "Sirbu Shale Formation"},
+            {"name": "Bhander Sandstone Formation"},
+            {"name": "Maihar Sandstone Formation"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Bhima Supergroup",
+      "rank_note": "Almost universally ranked as the 'Bhima Group' (smallest Proterozoic basin in India), not a Supergroup; included here at Supergroup level per request",
+      "age": "Neoproterozoic",
+      "region": "Bhima Basin, Kalaburagi/Yadgir districts (Karnataka) and Mahbubnagar/Rangareddy districts (Telangana)",
+      "unconformably_overlies": "Dharwar Craton basement (Adki Hill Conglomerate marks the Archean-Proterozoic boundary)",
+      "groups": [
+        {
+          "name": "Sedam Subgroup",
+          "note": "Ranked as Subgroup within Bhima Group by Mishra et al. (1987); shown here at group level for consistency of hierarchy",
+          "formations": [
+            {"name": "Rabanpalli Formation", "note": "Basal clastic sandstone-shale"},
+            {"name": "Shahabad Formation", "note": "Also called Kurkunta Formation (Malur & Nagendra, 1994); limestone-dominated"}
+          ]
+        },
+        {
+          "name": "Andola Subgroup",
+          "formations": [
+            {"name": "Halkal Shale Formation"},
+            {"name": "Katamadevarhalli Formation"},
+            {"name": "Harwal Shale Formation", "note": "Also referred to as Harwal-Gogi Shale; youngest unit, overlain by Deccan Trap"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Kurnool Supergroup",
+      "rank_note": "Conventionally ranked as the 'Kurnool Group', unconformably overlying the Cuddapah Supergroup (Nallamalai Group) rather than being part of it; included here at Supergroup level per request",
+      "age": "Neoproterozoic (c. 900-500 Ma)",
+      "region": "Kurnool Basin, Andhra Pradesh (northern part of Cuddapah Basin)",
+      "unconformably_overlies": "Cuddapah Supergroup (Nallamalai Group)",
+      "groups": [
+        {
+          "name": "Kurnool Group",
+          "formations": [
+            {"name": "Banganapalle Formation", "note": "Basal conglomerate/sandstone; hosts diamond-bearing gravels"},
+            {"name": "Narji Formation", "note": "Limestone"},
+            {"name": "Owk Formation", "note": "Shale"},
+            {"name": "Paniam Formation", "note": "Limestone/shale"},
+            {"name": "Koilkuntla Formation", "note": "Uppermost limestone"}
+          ]
+        }
+      ]
+    }
+  ]
+}
