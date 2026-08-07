@@ -34,6 +34,7 @@ function ageToPct(age) {
 
 export default function GeologicTimeSlider({ map, geojsonData, currentAge, setCurrentAge }) {
   const [activeDivisions, setActiveDivisions] = useState([])
+  const [isPlaying, setIsPlaying] = useState(false)
   const popupRef = useRef(null)
 
   useEffect(() => {
@@ -46,6 +47,9 @@ export default function GeologicTimeSlider({ map, geojsonData, currentAge, setCu
       map.addSource(sourceId, { type: 'geojson', data: geojsonData })
       map.addLayer({
         id: fillId, type: 'fill', source: sourceId,
+        layout: {
+          'fill-sort-key': ['-', 4000, ['to-number', ['get', 'age_min_ma']]]
+        },
         paint: { 
           'fill-color': '#8d4d1f', 
           'fill-opacity': ['case', ['==', ['get', 'age_uncertain'], true], 0.3, 0.7] 
@@ -53,6 +57,9 @@ export default function GeologicTimeSlider({ map, geojsonData, currentAge, setCu
       })
       map.addLayer({
         id: lineId, type: 'line', source: sourceId,
+        layout: {
+          'line-sort-key': ['-', 4000, ['to-number', ['get', 'age_min_ma']]]
+        },
         paint: {
           'line-color': '#4d2f16',
           'line-dasharray': ['case', ['==', ['get', 'age_uncertain'], true], ['literal', [4, 2]], ['literal', [1, 0]]]
@@ -77,35 +84,81 @@ export default function GeologicTimeSlider({ map, geojsonData, currentAge, setCu
 
   useEffect(() => {
     if (!map || !map.getLayer('schematic-fill')) return
-    const filter = ['all', ['>=', ['get', 'age_min_ma'], currentAge], ['<=', ['get', 'age_max_ma'], currentAge]]
+    // Show layer once currentAge reaches age_min_ma (formation start) and keep visible till present (0 Ma)
+    const filter = ['>=', ['to-number', ['get', 'age_min_ma']], currentAge]
     map.setFilter('schematic-fill', filter)
     map.setFilter('schematic-line', filter)
 
     const divisions = geojsonData.features
-      .filter(f => currentAge <= f.properties.age_min_ma && currentAge >= f.properties.age_max_ma)
+      .filter(f => f.properties.age_min_ma >= currentAge)
       .map(f => f.properties.classical_division)
     setActiveDivisions([...new Set(divisions)])
   }, [currentAge, map, geojsonData])
 
+  // Play / Pause Animation Loop
+  useEffect(() => {
+    let timer = null
+    if (isPlaying) {
+      timer = setInterval(() => {
+        setCurrentAge((prevAge) => {
+          if (prevAge <= 0) {
+            setIsPlaying(false)
+            return 0
+          }
+          const curPct = ageToPct(prevAge)
+          const nextPct = Math.min(100, curPct + 0.4)
+          const nextAge = pctToAge(nextPct)
+          if (nextPct >= 100) {
+            setIsPlaying(false)
+            return 0
+          }
+          return nextAge
+        })
+      }, 40)
+    }
+    return () => clearInterval(timer)
+  }, [isPlaying, setCurrentAge])
+
+  const togglePlay = () => {
+    if (!isPlaying && currentAge <= 0) {
+      setCurrentAge(4000)
+    }
+    setIsPlaying(!isPlaying)
+  }
+
   return (
     <div className="time-slider-card">
       <div className="time-slider-head">
-        <div>
-          <p className="time-slider-kicker">Geological Timeline</p>
-          <strong>{Math.round(currentAge)} Ma</strong>
+        <div className="time-slider-title-group">
+          <button 
+            type="button" 
+            className="play-btn" 
+            onClick={togglePlay}
+            title={isPlaying ? "Pause timeline animation" : "Play geologic timeline"}
+          >
+            {isPlaying ? '❚❚' : '▶'}
+          </button>
+          <div>
+            <p className="time-slider-kicker">Geological Timeline</p>
+            <strong>{Math.round(currentAge)} Ma</strong>
+          </div>
         </div>
         <div className="time-slider-status">
-          {activeDivisions.length > 0 ? activeDivisions.join(' • ') : 'No data'}
+          {activeDivisions.length > 0 ? activeDivisions.join(' • ') : 'No layers accumulated'}
         </div>
       </div>
       <div className="time-slider-shell">
         <input 
           type="range" min="0" max="100" step="0.1" 
           value={ageToPct(currentAge)} 
-          onChange={e => setCurrentAge(pctToAge(parseFloat(e.target.value)))} 
+          onChange={e => {
+            setIsPlaying(false)
+            setCurrentAge(pctToAge(parseFloat(e.target.value)))
+          }} 
           className="time-slider-input"
         />
         <div className="time-slider-track" />
+        <div className="time-slider-fill" style={{ width: `${ageToPct(currentAge)}%` }} />
         <div className="time-slider-ticks">
           {TIME_MAP.map(pt => (
             <div key={pt.age} className="time-slider-tick" style={{ left: `${pt.pct}%` }}>

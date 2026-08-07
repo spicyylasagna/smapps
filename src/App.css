@@ -18,6 +18,9 @@
 .dropdown-row label { display: grid; gap: 6px; color: #6b665f; font-size: 12px; }
 .dropdown-row span { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #817b73; }
 .dropdown-row select { width: 100%; border: 1px solid #cac6bd; border-radius: 5px; padding: 8px 10px; background: #fff; color: #2b2d2f; font: inherit; font-size: 13px; }
+.clear-selections-btn { width: 100%; margin-top: 12px; padding: 8px 10px; border: 1px solid #d9d0c5; border-radius: 6px; background: #fdfaf6; color: #8e4726; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.15s ease; }
+.clear-selections-btn:hover:not(:disabled) { background: #f5ece2; color: #be5b35; border-color: #cbbba9; }
+.clear-selections-btn:disabled { opacity: 0.45; cursor: not-allowed; background: #f2eee8; color: #9c958b; border-color: #e0dad0; }
 .age-control { margin-top: 16px; padding-top: 14px; border-top: 1px solid #e9e5dd; }.control-heading { display: flex; justify-content: space-between; color: #55534e; font-size: 12px; }.control-heading span { color: #817b73; }.age-control label { display: grid; grid-template-columns: 78px 1fr; align-items: center; gap: 6px; margin-top: 12px; color: #6b665f; font-size: 12px; }.age-control input { width: 100%; accent-color: #af5636; }.coverage-note { margin: 15px 0 0; color: #77726b; font-size: 11px; line-height: 1.45; }
 .inspector { top: 84px; right: 20px; width: 260px; min-height: 180px; transition: transform .2s ease; }
 .inspector-content { padding: 16px; }
@@ -28,6 +31,9 @@
 .legend { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-top: 22px; padding-top: 14px; border-top: 1px solid #e9e5dd; color: #726d65; font-size: 11px; }.legend-swatch { width: 15px; height: 10px; background: #bb9163; border: 1px solid #695840; }.legend-line { width: 16px; height: 2px; margin-left: 6px; background: #26231f; }
 .time-slider-card { position: absolute; z-index: 2; left: 50%; bottom: 24px; transform: translateX(-50%); width: min(720px, calc(100% - 32px)); padding: 14px 16px 12px; border: 1px solid #d7d0c5; border-radius: 12px; background: rgba(255, 252, 247, .96); box-shadow: 0 8px 24px rgba(30, 24, 19, .16); }
 .time-slider-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.time-slider-title-group { display: flex; align-items: center; gap: 12px; }
+.play-btn { width: 34px; height: 34px; border: 1px solid #d7c0a5; border-radius: 50%; background: #8a4a1f; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s ease; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+.play-btn:hover { background: #a35624; transform: scale(1.05); }
 .time-slider-kicker { margin: 0 0 2px; color: #9c633f; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 .time-slider-head strong { color: #2b2d2f; font-size: 16px; }
 .time-slider-status { max-width: 60%; color: #6b665f; font-size: 12px; text-align: right; }
@@ -149,4 +155,162 @@
 .geology-popup p {
   margin: 0;
   font-size: 12px;
+}
+
+/* Regional Variant Selector Pills */
+.variant-select-row {
+  margin-top: 12px;
+}
+.variant-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: #817b73;
+  margin-bottom: 6px;
+}
+.variant-pill-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.variant-pill {
+  width: 100%;
+  text-align: left;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 6px;
+  border: 1px solid #d9d0c5;
+  background: #fffefb;
+  color: #59534a;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.variant-pill:hover {
+  background: #f7f0e6;
+  color: #8e4726;
+  border-color: #c9b49f;
+}
+.variant-pill.active {
+  background: #8a4a1f;
+  color: #ffffff;
+  border-color: #723b17;
+  box-shadow: 0 2px 6px rgba(138, 74, 31, 0.25);
+}
+
+/* Source Verification Badges */
+.source-badge {
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 11px;
+  line-height: 1.4;
+}
+.source-badge.verified {
+  background: #edf7ed;
+  border: 1px solid #b7e1cd;
+  color: #1e4620;
+}
+.source-badge.verified .badge-icon {
+  background: #2e7d32;
+  color: #fff;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.source-badge.literature {
+  background: #f7f3ed;
+  border: 1px solid #e2dacd;
+  color: #5c5549;
+}
+.source-badge.literature .badge-icon {
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.badge-text strong {
+  display: block;
+  font-size: 11px;
+  font-weight: 750;
+  margin-bottom: 2px;
+}
+.badge-text p {
+  margin: 0 !important;
+  font-size: 10px !important;
+  opacity: 0.9;
+}
+
+/* Division Breakdown Up To Members Display */
+.hierarchy-breakdown {
+  margin-top: 16px;
+}
+.breakdown-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.breakdown-level {
+  background: #fdfbf7;
+  border: 1px solid #e3dbce;
+  border-left: 4px solid #8a4a1f;
+  border-radius: 6px;
+  padding: 10px 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.breakdown-level.variant {
+  border-left-color: #d35400;
+  margin-left: 6px;
+}
+.breakdown-level.group {
+  border-left-color: #27ae60;
+  margin-left: 12px;
+}
+.breakdown-level.formation {
+  border-left-color: #2980b9;
+  margin-left: 18px;
+}
+.breakdown-level.member {
+  border-left-color: #8e44ad;
+  margin-left: 24px;
+}
+.level-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #e8ded1;
+  color: #4a4237;
+  margin-bottom: 4px;
+}
+.level-badge.supergroup { background: #f2e3d5; color: #73340d; }
+.level-badge.variant { background: #fae4d7; color: #a33e00; }
+.level-badge.group { background: #dcf2e3; color: #145a32; }
+.level-badge.formation { background: #d9ecf7; color: #154360; }
+.level-badge.member { background: #ebdcf2; color: #4a1460; }
+
+.level-title {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #2c251e;
+  margin-bottom: 6px;
+}
+.level-details p {
+  margin: 2px 0 !important;
+  font-size: 11px !important;
+  color: #595246 !important;
+  line-height: 1.35 !important;
 }

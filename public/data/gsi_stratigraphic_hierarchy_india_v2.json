@@ -6,45 +6,120 @@
     "age": "Paleoarchean to Neoarchean (c. 3400-2500 Ma)",
     "description": "Composite basement of TTG gneisses, migmatites, and granites on which the Proterozoic supergroups were unconformably deposited. Not stratified in the formal Group/Formation sense; regionally subdivided and named differently across cratons.",
     "components": [
-      {"name": "Older Metamorphic Group / Sargur Group type supracrustals", "region": "Dharwar Craton, Karnataka", "note": "Oldest enclaves within PGC, includes BIF, ultramafics, pelites"},
-      {"name": "Peninsular Gneiss (sensu stricto)", "region": "Dharwar Craton, Karnataka", "note": "Dominant tonalite-trondhjemite-granodiorite (TTG) gneiss, multiple phases"},
+      {"name": "Older Metamorphic Group / Sargur Group type supracrustals", "region": "Dharwar Craton, Karnataka", "note": "Oldest enclaves within PGC, includes BIF, ultramafics, pelites - see craton_sequences.dharwar for Ramakrishnan-sourced detail"},
+      {"name": "Peninsular Gneiss (sensu stricto)", "region": "Dharwar Craton, Karnataka", "note": "Dominant tonalite-trondhjemite-granodiorite (TTG) gneiss, multiple phases - see craton_sequences.dharwar for Ramakrishnan-sourced detail"},
       {"name": "Closepet Granite", "region": "Dharwar Craton, Karnataka", "note": "Late Archean granite intrusion, often mapped separately from PGC gneisses"},
       {"name": "Bundelkhand Gneissic Complex (BnGC)", "region": "Bundelkhand Craton, Madhya Pradesh/Uttar Pradesh", "note": "Basement to Bijawar Group and Vindhyan Supergroup"},
-      {"name": "Bastar Gneissic Complex", "region": "Bastar Craton, Chhattisgarh/Odisha", "note": "Basement to Chhattisgarh Supergroup"},
+      {"name": "Bastar Gneissic Complex", "region": "Bastar Craton, Chhattisgarh/Odisha", "note": "Basement to Chhattisgarh Supergroup - see craton_sequences.bastar for Ramakrishnan-sourced detail"},
       {"name": "Chhotanagpur Granite Gneissic Complex (CGGC)", "region": "Chhotanagpur Plateau, Jharkhand/Bihar/West Bengal", "note": "Basement/host to Mahakoshal-equivalent supracrustals in the east"},
       {"name": "Banded Gneissic Complex (BGC)", "region": "Aravalli-Delhi belt, Rajasthan", "note": "Basement to Aravalli and Delhi Supergroups, includes Bhilwara Supergroup gneisses"},
       {"name": "Sandur/Dharwar Gneissic Complex", "region": "Eastern Dharwar Craton, Karnataka/Andhra Pradesh", "note": "Basement to Cuddapah and Kurnool basins"}
-    ]
+    ],
+    "craton_sequences": {
+      "_note": "Detailed, Ramakrishnan-table-sourced basement-to-cover sequences. Populated as source table images are provided; unpopulated cratons still fall back on the general 'components' list above.",
+      "dharwar": {
+        "source": "Ramakrishnan, M. - Table 3D-2, Simplified stratigraphy of Archaean Dharwar craton",
+        "regional_variants": [
+          {
+            "variant_name": "Western Dharwar Craton (WDC)",
+            "sequence_oldest_to_youngest": [
+              {"name": "Gorur Gneiss", "age": "3400-3300 Ma", "unit_type": "basement"},
+              {"name": "Sargur Group", "age": "3300-3100 Ma", "unit_type": "basement supracrustals"},
+              {"name": "Peninsular Gneiss", "age": "~3000 Ma", "unit_type": "basement"},
+              {"name": "unconformity", "unit_type": "boundary"},
+              {"name": "Bababudan Group", "age": "2800-2600 Ma", "unit_type": "group", "part_of": "Dharwar Supergroup"},
+              {"name": "Chitradurga Group", "age": "2800-2600 Ma", "unit_type": "group", "part_of": "Dharwar Supergroup"},
+              {"name": "Younger granite (Chitradurga, Arsikere) + Charnockite", "age": "2600-2500 Ma", "unit_type": "intrusive"}
+            ]
+          },
+          {
+            "variant_name": "Eastern Dharwar Craton (EDC)",
+            "sequence_oldest_to_youngest": [
+              {"name": "Putative Basement", "age": "3400-3300 Ma", "unit_type": "basement"},
+              {"name": "(?) Warangal Group, (?) Salem Group", "age": "3300-3100 Ma", "unit_type": "basement supracrustals", "note": "Question marks are in the original source, indicating uncertain correlation"},
+              {"name": "Enclaves of older gneiss", "age": "~3000 Ma", "unit_type": "basement"},
+              {"name": "unconformity", "unit_type": "boundary"},
+              {"name": "Kolar Group", "age": "2800-2600 Ma", "unit_type": "group", "part_of": "Dharwar Supergroup (EDC equivalent)"},
+              {"name": "Yashwantanagar Formation", "age": "2800-2600 Ma", "unit_type": "formation"},
+              {"name": "Younger granite/gneiss (Closepet and equivalents) + Charnockite", "age": "2600-2500 Ma", "unit_type": "intrusive"}
+            ]
+          }
+        ]
+      },
+      "bastar": {
+        "source": "Ramakrishnan, M. - Table 3B-1, Generalised stratigraphy of Bastar craton",
+        "regional_variants": [
+          {
+            "variant_name": "Kotri-Dongargarh Orogen",
+            "sequence_oldest_to_youngest": [
+              {"name": "Gneissic Complex", "age": ">3000 Ma, with relict signatures at 3600-3500 Ma", "unit_type": "basement"},
+              {"name": "Amgaon Group", "age": "~3000 Ma", "unit_type": "group"},
+              {"name": "Bengpal Group", "age": "2600-2500 Ma", "unit_type": "group"},
+              {"name": "Bailadila Group", "age": "~2400 Ma", "unit_type": "group"},
+              {"name": "Nandgaon Group", "age": "~2300 Ma", "unit_type": "group"},
+              {"name": "Dongargarh Granite", "age": "~2300 Ma", "unit_type": "intrusive"},
+              {"name": "Khairagarh Group", "age": "~2200 Ma", "unit_type": "group"},
+              {"name": "Chilpi Group", "age": "2000-1800 Ma", "unit_type": "group"}
+            ]
+          },
+          {
+            "variant_name": "Rest of the craton",
+            "sequence_oldest_to_youngest": [
+              {"name": "Sukma Group", "age": "~3000 Ma", "unit_type": "group"},
+              {"name": "Bhopalpatnam and Kondagaon granulites, Sukma granites", "age": "2600 Ma", "unit_type": "formation"},
+              {"name": "Bengpal Group", "age": "2600-2500 Ma", "unit_type": "group"},
+              {"name": "Sonakhan Group", "age": "2300 Ma", "unit_type": "group"},
+              {"name": "Malanjkhand Granite, Kanker Granite", "age": "~2300 Ma", "unit_type": "intrusive"},
+              {"name": "Chilpi Group = Sakoli Group", "age": "2000-1800 Ma", "unit_type": "group"}
+            ]
+          }
+        ]
+      }
+    }
   },
   "supergroups": [
     {
       "id": 1,
       "name": "Dharwar Supergroup",
-      "age": "Neoarchean (c. 3000-2500 Ma)",
+      "age": "Neoarchean (2800-2600 Ma)",
       "region": "Western & Eastern Dharwar Craton, Karnataka",
-      "unconformably_overlies": "Peninsular Gneissic Complex (Peninsular Gneiss / Older Metamorphic Group)",
-      "groups": [
+      "unconformably_overlies": "Peninsular Gneiss (WDC) / Enclaves of older gneiss (EDC) - see basement sequence below",
+      "source": "Ramakrishnan, M. - Table 3D-2, Simplified stratigraphy of Archaean Dharwar craton",
+      "note": "Sargur Group is NOT part of the Supergroup in this source - it lies below the basal unconformity as older basement (3300-3100 Ma). Moved to the basement sequence accordingly; see archean_basement.craton_sequences.dharwar.",
+      "regional_variants": [
         {
-          "name": "Sargur Group",
-          "note": "Oldest supracrustal assemblage; treated by some as pre-Dharwar basement enclaves rather than base of the Supergroup",
-          "formations": [
-            {"name": "Banded Iron Formation (BIF) - ultramafic assemblage"},
-            {"name": "Fuchsite quartzite-kyanite/sillimanite schist assemblage"}
+          "variant_name": "Western Dharwar Craton (WDC)",
+          "groups": [
+            {
+              "name": "Chitradurga Group",
+              "age": "2800-2600 Ma"
+            },
+            {
+              "name": "Bababudan Group",
+              "age": "2800-2600 Ma"
+            }
+          ],
+          "post_supergroup_intrusives": [
+            {"name": "Younger granite (Chitradurga, Arsikere)", "age": "2600-2500 Ma"},
+            {"name": "Charnockite", "age": "2600-2500 Ma"}
           ]
         },
         {
-          "name": "Bababudan Group",
-          "formations": [
-            {"name": "Bababudan Quartzite-Conglomerate Formation"},
-            {"name": "Chikmagalur Volcanic Formation"}
-          ]
-        },
-        {
-          "name": "Chitradurga Group",
-          "formations": [
-            {"name": "Vanivilas Formation", "members": ["Talya Member", "Hiriyur Member"]},
-            {"name": "Ingaldhal Formation"},
-            {"name": "Chitradurga Conglomerate-Greywacke Formation"}
+          "variant_name": "Eastern Dharwar Craton (EDC)",
+          "groups": [
+            {
+              "name": "Kolar Group",
+              "age": "2800-2600 Ma",
+              "note": "EDC equivalent of Chitradurga/Bababudan Groups"
+            },
+            {
+              "name": "Yashwantanagar Formation",
+              "age": "2800-2600 Ma"
+            }
+          ],
+          "post_supergroup_intrusives": [
+            {"name": "Younger granite/gneiss (Closepet and equivalents)", "age": "2600-2500 Ma"},
+            {"name": "Charnockite", "age": "2600-2500 Ma"}
           ]
         }
       ]
@@ -332,6 +407,288 @@
             {"name": "Owk Formation", "note": "Shale"},
             {"name": "Paniam Formation", "note": "Limestone/shale"},
             {"name": "Koilkuntla Formation", "note": "Uppermost limestone"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Paleozoic of Spiti",
+      "age": "Cambrian to Permian (c. 541-252 Ma)",
+      "region": "Spiti Valley, Himachal Pradesh (Tethyan Himalaya)",
+      "source": "Ramakrishnan & Vaidyanadhan (2008) - Geology of India, Vol 2, Chapter 24 (Tethyan Himalayan Sequence of Spiti)",
+      "unconformably_overlies": "Vaikrita Group / Neoproterozoic Basement",
+      "groups": [
+        {
+          "name": "Haimanta Group (Cambrian)",
+          "age": "Cambrian (541-485 Ma)",
+          "source": "Ramakrishnan & Vaidyanadhan (2008) - Geology of India, Vol 2",
+          "formations": [
+            {
+              "name": "Kunzam La Formation",
+              "age": "Lower-Middle Cambrian",
+              "source": "Ramakrishnan & Vaidyanadhan (2008)",
+              "members": ["Trilobite Zone Member", "Quartzite Member"]
+            },
+            {
+              "name": "Parahio Formation",
+              "age": "Middle-Upper Cambrian",
+              "source": "Ramakrishnan & Vaidyanadhan (2008)",
+              "members": ["Upper Parahio Member"]
+            }
+          ]
+        },
+        {
+          "name": "Sanugba Group (Ordovician-Silurian)",
+          "age": "Ordovician to Silurian (485-419 Ma)",
+          "source": "Ramakrishnan & Vaidyanadhan (2008) - Geology of India, Vol 2",
+          "formations": [
+            {
+              "name": "Shiala Formation",
+              "age": "Ordovician",
+              "source": "Ramakrishnan & Vaidyanadhan (2008)",
+              "members": ["Quartzite Member", "Limestone Member"]
+            },
+            {
+              "name": "Pin Formation",
+              "age": "Silurian",
+              "source": "Ramakrishnan & Vaidyanadhan (2008)",
+              "members": ["Coral-Brachiopod Member"]
+            }
+          ]
+        },
+        {
+          "name": "Kanawar Group (Devonian-Carboniferous)",
+          "age": "Devonian to Carboniferous (419-299 Ma)",
+          "source": "Ramakrishnan & Vaidyanadhan (2008) - Geology of India, Vol 2",
+          "formations": [
+            {
+              "name": "Muth Formation",
+              "age": "Devonian",
+              "source": "Ramakrishnan & Vaidyanadhan (2008)",
+              "members": ["Snow-White Orthoquartzite Member"]
+            },
+            {
+              "name": "Lipak Formation",
+              "age": "Lower Carboniferous",
+              "source": "Ramakrishnan & Vaidyanadhan (2008)",
+              "members": ["Gypsiferous Limestone Member"]
+            },
+            {
+              "name": "Po Formation",
+              "age": "Upper Carboniferous",
+              "source": "Ramakrishnan & Vaidyanadhan (2008)",
+              "members": ["Fenestella Shale Member", "Flora Member"]
+            }
+          ]
+        },
+        {
+          "name": "Kuling Group (Permian)",
+          "age": "Permian (299-252 Ma)",
+          "source": "Ramakrishnan & Vaidyanadhan (2008) - Geology of India, Vol 2",
+          "formations": [
+            {
+              "name": "Gechang Formation",
+              "age": "Lower Permian",
+              "source": "Ramakrishnan & Vaidyanadhan (2008)",
+              "members": ["Marginifera Sandstone Member"]
+            },
+            {
+              "name": "Gungri Formation",
+              "age": "Upper Permian",
+              "source": "Ramakrishnan & Vaidyanadhan (2008)",
+              "members": ["Cyclolobus Shale Member"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Paleozoic of Kashmir",
+      "age": "Cambrian to Permian (c. 541-252 Ma)",
+      "region": "Kashmir Valley, Jammu & Kashmir (Tethyan Himalaya)",
+      "source": "Ramakrishnan & Vaidyanadhan (2008) - Geology of India, Vol 2, Chapter 23 (Kashmir Basin Stratigraphy)",
+      "unconformably_overlies": "Salkhala Group / Central Crystallines",
+      "groups": [
+        {
+          "name": "Lolab Group (Cambrian)",
+          "age": "Cambrian (541-485 Ma)",
+          "source": "Ramakrishnan & Vaidyanadhan (2008) - Geology of India, Vol 2",
+          "formations": [
+            {
+              "name": "Machhal Formation",
+              "age": "Lower Cambrian",
+              "source": "Ramakrishnan & Vaidyanadhan (2008)"
+            },
+            {
+              "name": "Lolab Formation",
+              "age": "Middle Cambrian",
+              "source": "Ramakrishnan & Vaidyanadhan (2008)",
+              "members": ["Trace Fossil Member", "Redlichia Trilobite Member"]
+            }
+          ]
+        },
+        {
+          "name": "Marhaum Group (Ordovician-Silurian)",
+          "age": "Ordovician to Silurian (485-419 Ma)",
+          "source": "Ramakrishnan & Vaidyanadhan (2008) - Geology of India, Vol 2",
+          "formations": [
+            {
+              "name": "Marhaum Formation",
+              "age": "Ordovician",
+              "source": "Ramakrishnan & Vaidyanadhan (2008)"
+            },
+            {
+              "name": "Harpatnar Formation",
+              "age": "Silurian",
+              "source": "Ramakrishnan & Vaidyanadhan (2008)",
+              "members": ["Graptolite Shale Member"]
+            }
+          ]
+        },
+        {
+          "name": "Aishmuqam Group (Devonian-Carboniferous)",
+          "age": "Devonian to Carboniferous (419-299 Ma)",
+          "source": "Ramakrishnan & Vaidyanadhan (2008) - Geology of India, Vol 2",
+          "formations": [
+            {
+              "name": "Muth Quartzite Formation",
+              "age": "Devonian",
+              "source": "Ramakrishnan & Vaidyanadhan (2008)"
+            },
+            {
+              "name": "Syringothyris Limestone Formation",
+              "age": "Lower Carboniferous",
+              "source": "Ramakrishnan & Vaidyanadhan (2008)",
+              "members": ["Brachiopod Limestone Member"]
+            },
+            {
+              "name": "Fenestella Shale Formation",
+              "age": "Upper Carboniferous",
+              "source": "Ramakrishnan & Vaidyanadhan (2008)",
+              "members": ["Bryozoan Shale Member"]
+            }
+          ]
+        },
+        {
+          "name": "Panjal Volcanic Series / Group (Permian)",
+          "age": "Permian (300-252 Ma)",
+          "source": "Ramakrishnan & Vaidyanadhan (2008) - Geology of India, Vol 2",
+          "formations": [
+            {
+              "name": "Agglomeratic Slate Formation",
+              "age": "Lower Permian",
+              "source": "Ramakrishnan & Vaidyanadhan (2008)",
+              "members": ["Glaciomarine Pyroclastic Member", "Eurydesma Member"]
+            },
+            {
+              "name": "Panjal Trap Formation",
+              "age": "Lower-Middle Permian",
+              "source": "Ramakrishnan & Vaidyanadhan (2008)",
+              "members": ["Tholeiitic Basalt Flow Member"]
+            },
+            {
+              "name": "Zewan Formation",
+              "age": "Upper Permian",
+              "source": "Ramakrishnan & Vaidyanadhan (2008)",
+              "members": ["Gangamopteris Bed Member", "Productid Limestone Member"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Gondwana Supergroup",
+      "age": "Upper Carboniferous to Cretaceous (c. 300-100 Ma)",
+      "region": "Damodar, Mahanadi, Godavari & Narmada River Valleys",
+      "source": "GSI Memoirs Vol 125, Geology of Gondwana Basins of India",
+      "unconformably_overlies": "Precambrian Basement Gneisses",
+      "groups": [
+        {
+          "name": "Lower Gondwana Group (Permian)",
+          "age": "Permian (300-252 Ma)",
+          "source": "GSI Memoirs Vol 125",
+          "formations": [
+            {
+              "name": "Talchir Formation",
+              "age": "Upper Carboniferous - Lower Permian",
+              "source": "GSI Memoirs Vol 125",
+              "members": ["Boulder Bed Member", "Needle Shale Member"]
+            },
+            {
+              "name": "Barakar Formation",
+              "age": "Lower Permian",
+              "source": "GSI Memoirs Vol 125",
+              "members": ["Coal Measure Sandstone Member"]
+            },
+            {
+              "name": "Raniganj Formation",
+              "age": "Upper Permian",
+              "source": "GSI Memoirs Vol 125",
+              "members": ["Upper Coal Measure Member"]
+            }
+          ]
+        },
+        {
+          "name": "Upper Gondwana Group (Triassic-Cretaceous)",
+          "age": "Triassic to Cretaceous (252-100 Ma)",
+          "source": "GSI Memoirs Vol 125",
+          "formations": [
+            {
+              "name": "Panchet Formation",
+              "age": "Lower Triassic",
+              "source": "GSI Memoirs Vol 125",
+              "members": ["Red Bed Lystrosaurus Member"]
+            },
+            {
+              "name": "Mahadeva / Rajmahal Formation",
+              "age": "Jurassic",
+              "source": "GSI Memoirs Vol 125",
+              "members": ["Intertrappean Plant Bed Member"]
+            },
+            {
+              "name": "Jabalpur Formation",
+              "age": "Lower Cretaceous",
+              "source": "GSI Memoirs Vol 125",
+              "members": ["Plant Bed Member"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "name": "Deccan Traps",
+      "age": "Cretaceous-Paleogene Boundary (c. 66 Ma)",
+      "region": "Western & Central India (Maharashtra, MP, Gujarat)",
+      "source": "GSI Special Publication No. 84 / Vaidyanadhan & Ramakrishnan (2008)",
+      "unconformably_overlies": "Gondwana & Precambrian Formations",
+      "groups": [
+        {
+          "name": "Deccan Volcanic Group",
+          "age": "c. 66 Ma",
+          "source": "GSI Special Publication No. 84",
+          "formations": [
+            {
+              "name": "Kalsubai Subgroup / Formation",
+              "age": "66.5 Ma",
+              "source": "GSI",
+              "members": ["Basal Flow Member"]
+            },
+            {
+              "name": "Lonavala Subgroup / Formation",
+              "age": "66.0 Ma",
+              "source": "GSI",
+              "members": ["Intertrappean Sediment Member"]
+            },
+            {
+              "name": "Wai Subgroup / Formation",
+              "age": "65.5 Ma",
+              "source": "GSI",
+              "members": ["Upper Trap Member"]
+            }
           ]
         }
       ]
